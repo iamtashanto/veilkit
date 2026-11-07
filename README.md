@@ -18,6 +18,14 @@ auto-measure DOM wrapping, 40 responsive presets, 30 spinners, 30 GPU animations
 
 [**Live Interactive Playground & Documentation → https://veilkit.tashanto.com**](https://veilkit.tashanto.com)
 
+<br />
+
+<p align="center">
+  <a href="https://veilkit.tashanto.com">
+    <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-hero.gif" alt="Veilkit Loading and Skeleton Demo" width="860" style="max-width: 100%; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);" />
+  </a>
+</p>
+
 </div>
 
 ---
@@ -470,6 +478,10 @@ Drop-in UMD/IIFE bundle exporting the global `Veilkit`:
 
 Veilkit includes 40 canonical, responsive, customizable layout presets. Every preset supports responsive breakpoints and 5 shape styles (`rounded`, `pill`, `square`, `sharp`, `glass`).
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-presets.gif" alt="Veilkit 40 Presets Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
+</p>
+
 ### Shape Styles (`shape`)
 - `rounded`: Default modern rounded corners (`8px` radius).
 - `pill`: Fully rounded capsule corners (`9999px` radius).
@@ -567,6 +579,10 @@ createTheme({
 
 All 30 spinners are GPU-accelerated, scalable via `size` and `color`, and support `glass` frosted blur variants and custom `speed`:
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-spinners.gif" alt="Veilkit 30 Spinners Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
+</p>
+
 `ring` • `dual-ring` • `dots` • `bars` • `pulse` • `orbit` • `wave` • `bounce` • `ios-activity` • `glass-orb` • `morph` • `progress-circle` • `arc-gradient` • `pulse-ring` • `dots-circle` • `grid-dots` • `square-flip` • `cube-fold` • `hourglass` • `infinity` • `heartbeat-line` • `equalizer` • `chasing-dots` • `typing` • `liquid-fill` • `atom` • `clock` • `radar` • `ellipsis` • `flower`
 
 ```tsx
@@ -580,6 +596,10 @@ All 30 spinners are GPU-accelerated, scalable via `size` and `color`, and suppor
 ## 🔘 Loading Button & State Machine
 
 Veilkit includes a comprehensive loading button with state machine transitions, 16 loading styles, result animations, press feedback, and native haptics:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-button.gif" alt="Veilkit Loading Button Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
+</p>
 
 - **State Machine**: `idle → loading → success | error → idle`. Automatically handles async promises or explicit `status` prop (`idle`, `loading`, `success`, `error`).
 - **Auto-Reset**: Configurable `resetAfter` (default: 2000ms) resets success/error state back to idle.
