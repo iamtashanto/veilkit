@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SkeletonPreset } from 'veilkit/react';
 
 export default function PresetsPage() {
   const [search, setSearch] = useState('');
@@ -128,20 +129,19 @@ export default function PresetsPage() {
                 <p className="text-xs text-slate-400 mt-1 leading-relaxed">{preset.desc}</p>
               </div>
 
-              {/* Skeleton Mockup Box */}
+              {/* Real Live Veilkit Preset */}
               <div
-                className={`p-4 rounded-xl border border-white/[0.06] bg-slate-900/60 space-y-2.5 overflow-hidden relative ${
+                className={`p-4 rounded-xl border border-white/[0.06] bg-slate-900/60 overflow-hidden relative min-h-[140px] flex items-center justify-center ${
                   selectedShape === 'glass' ? 'backdrop-blur-md bg-white/[0.02]' : ''
                 }`}
               >
-                <div className="w-full h-16 rounded bg-slate-800 relative overflow-hidden">
-                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-                </div>
-                <div className="w-3/5 h-4 rounded bg-slate-800 relative overflow-hidden">
-                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-                </div>
-                <div className="w-4/5 h-3 rounded bg-slate-800 relative overflow-hidden">
-                  <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+                <div className="w-full">
+                  <SkeletonPreset
+                    key={`${preset.name}-${selectedShape}`}
+                    name={preset.name as any}
+                    shape={selectedShape}
+                    animation="shimmer"
+                  />
                 </div>
               </div>
 

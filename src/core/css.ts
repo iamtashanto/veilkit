@@ -507,7 +507,7 @@ ${Object.entries(BUILTIN_THEMES).map(([name, t]) => `[data-veil-theme="${name}"]
 .veil-btn-loading {
   position: relative;
   pointer-events: none;
-  cursor: default;
+  cursor: wait !important;
 }
 .veil-btn-spinner-wrap {
   display: inline-flex;
@@ -515,6 +515,80 @@ ${Object.entries(BUILTIN_THEMES).map(([name, t]) => `[data-veil-theme="${name}"]
   justify-content: center;
   margin-right: 8px;
 }
+.veil-btn-success { background-color: #10b981 !important; color: #fff !important; }
+.veil-btn-error { background-color: #ef4444 !important; color: #fff !important; }
+.veil-btn-shake { animation: veil-shake 350ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+.veil-btn-ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: veil-btn-ripple-anim 600ms linear;
+  pointer-events: none;
+}
+.veil-btn-progress-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.25);
+  transition: width 200ms ease;
+}
+.veil-btn-shimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: veil-btn-shimmer 1.5s infinite;
+}
+.veil-btn-pulse-glow { animation: veil-btn-glow 1.4s ease-in-out infinite alternate; }
+.veil-btn-stripes {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.15) 10px, transparent 10px, transparent 20px);
+  background-size: 28px 28px;
+  animation: veil-btn-stripes 1s linear infinite;
+}
+.veil-btn-morph { border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important; transition: all 250ms ease; }
+.veil-btn-typing-dots { animation: veil-typing-text 1.2s infinite; display: inline-block; width: 1.2em; text-align: left; }
+.veil-btn-slide-wrap { display: flex; flex-direction: column; overflow: hidden; height: 1.2em; position: relative; }
+.veil-btn-slide-out { animation: veil-slide-up-out 250ms forwards; }
+.veil-btn-slide-in { animation: veil-slide-up-in 250ms forwards; }
+.veil-btn-border-trace {
+  position: absolute; inset: -2px; border-radius: inherit;
+  background: conic-gradient(from 0deg, transparent 60%, currentColor 100%);
+  animation: veil-spin 1.2s linear infinite;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1.5px));
+}
+.veil-btn-liquid {
+  position: absolute; inset: 0; background: currentColor; opacity: 0.15;
+  animation: veil-liquid-wave 2s infinite ease-in-out alternate;
+}
+.veil-btn-glass-shine {
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+}
+.veil-btn-neon-pulse {
+  box-shadow: 0 0 15px currentColor;
+  animation: veil-btn-glow 1.2s infinite alternate;
+}
+.veil-btn-burst {
+  position: absolute; inset: -4px; border-radius: inherit;
+  box-shadow: 0 0 20px #10b981;
+  animation: veil-burst 500ms ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes veil-draw { to { stroke-dashoffset: 0; } }
+@keyframes veil-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+@keyframes veil-btn-ripple-anim { to { transform: scale(4); opacity: 0; } }
+@keyframes veil-btn-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes veil-btn-glow { from { opacity: 0.8; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
+@keyframes veil-btn-stripes { from { background-position: 0 0; } to { background-position: 28px 0; } }
+@keyframes veil-slide-up-out { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+@keyframes veil-slide-up-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes veil-liquid-wave { from { transform: scaleY(0.7); } to { transform: scaleY(1); } }
+@keyframes veil-burst { 0% { opacity: 1; transform: scale(0.95); } 100% { opacity: 0; transform: scale(1.2); } }
+@keyframes veil-typing-text { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
 .veil-lazy-img-wrap {
   position: relative;
   overflow: hidden;

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { Spinner } from 'veilkit/react';
 
 interface SpinnerItem {
   name: string;
@@ -271,14 +272,13 @@ export default function SpinnersCatalogPage() {
                     filter: glass ? 'drop-shadow(0 0 12px rgba(56, 189, 248, 0.5))' : undefined,
                   }}
                 >
-                  <div
-                    className={`veil-spinner veil-spinner-${item.name}`}
-                    style={{
-                      width: `${size}px`,
-                      height: `${size}px`,
-                      color: color,
-                      animationDuration: `${1 / speed}s`,
-                    }}
+                  <Spinner
+                    key={`${item.name}-${size}-${color}-${speed}-${glass}`}
+                    type={item.name as any}
+                    size={size}
+                    color={color}
+                    speed={speed}
+                    glass={glass}
                   />
                 </div>
 
