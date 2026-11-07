@@ -63,7 +63,7 @@ export class RouteProgressController {
   }
 
   public inc(amount?: number): void {
-    let n = this.currentProgress;
+    const n = this.currentProgress;
     if (n >= 1) return;
 
     if (typeof amount !== 'number') {

@@ -1,0 +1,17 @@
+{
+  "name": "example-angular",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "^17.3.0",
+    "@angular/core": "^17.3.0",
+    "@angular/router": "^17.3.0",
+    "rxjs": "^7.8.1",
+    "veilkit": "workspace:*",
+    "zone.js": "~0.14.3"
+  }
+}

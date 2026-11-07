@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { createApp, h } from 'vue';
-import { veilkitPlugin, VSkeleton, VSpinner } from '../../src/vue';
+import { veilkitPlugin, VSkeleton } from '../../src/vue';
 
 describe('Vue 3 Adapter', () => {
   it('should install veilkit plugin and register global directives/components', () => {

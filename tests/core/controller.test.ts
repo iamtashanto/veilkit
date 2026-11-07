@@ -21,4 +21,30 @@ describe('Core - Imperative Controller API', () => {
     });
     expect(veil.getThemeTokens('glass')).toBeDefined();
   });
+
+  it('should create skeleton controller with show, hide, update, destroy lifecycle', () => {
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+
+    const controller = veil.skeleton(el, { animation: 'pulse' });
+    expect(controller.element).toBe(el);
+    expect(el.getAttribute('aria-busy')).toBe('true');
+
+    controller.update({ animation: 'wave' });
+    controller.hide();
+    expect(el.getAttribute('aria-busy')).toBeNull();
+
+    controller.show();
+    expect(el.getAttribute('aria-busy')).toBe('true');
+
+    controller.destroy();
+    el.remove();
+  });
+
+  it('should attach spinner via veil.spinner()', () => {
+    const target = document.createElement('div');
+    const spinner = veil.spinner(target, { type: 'bars' });
+    expect(spinner.classList.contains('veil-spinner-bars')).toBe(true);
+    expect(target.children.length).toBe(1);
+  });
 });

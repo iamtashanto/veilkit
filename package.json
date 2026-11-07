@@ -2,12 +2,12 @@
   "name": "veilkit",
   "version": "0.1.0",
   "description": "Every loading state, beautifully. One package, every framework.",
-  "author": "Antigravity Team",
+  "author": "Md Tanvir Ahamed Shanto",
   "license": "MIT",
   "homepage": "https://veilkit.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veilkit/veilkit.git"
+    "url": "git+https://github.com/veilkit/veilkit.git"
   },
   "bugs": {
     "url": "https://github.com/veilkit/veilkit/issues"
@@ -52,45 +52,85 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./styles.css": "./dist/styles.css",
     "./react": {
-      "types": "./dist/react/index.d.ts",
-      "import": "./dist/react/index.js",
-      "require": "./dist/react/index.cjs"
+      "import": {
+        "types": "./dist/react/index.d.ts",
+        "default": "./dist/react/index.js"
+      },
+      "require": {
+        "types": "./dist/react/index.d.cts",
+        "default": "./dist/react/index.cjs"
+      }
     },
     "./vue": {
-      "types": "./dist/vue/index.d.ts",
-      "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs"
+      "import": {
+        "types": "./dist/vue/index.d.ts",
+        "default": "./dist/vue/index.js"
+      },
+      "require": {
+        "types": "./dist/vue/index.d.cts",
+        "default": "./dist/vue/index.cjs"
+      }
     },
     "./svelte": {
-      "types": "./dist/svelte/index.d.ts",
-      "import": "./dist/svelte/index.js",
-      "require": "./dist/svelte/index.cjs"
+      "import": {
+        "types": "./dist/svelte/index.d.ts",
+        "default": "./dist/svelte/index.js"
+      },
+      "require": {
+        "types": "./dist/svelte/index.d.cts",
+        "default": "./dist/svelte/index.cjs"
+      }
     },
     "./angular": {
-      "types": "./dist/angular/index.d.ts",
-      "import": "./dist/angular/index.js",
-      "require": "./dist/angular/index.cjs"
+      "import": {
+        "types": "./dist/angular/index.d.ts",
+        "default": "./dist/angular/index.js"
+      },
+      "require": {
+        "types": "./dist/angular/index.d.cts",
+        "default": "./dist/angular/index.cjs"
+      }
     },
     "./element": {
-      "types": "./dist/element/index.d.ts",
-      "import": "./dist/element/index.js",
-      "require": "./dist/element/index.cjs"
+      "import": {
+        "types": "./dist/element/index.d.ts",
+        "default": "./dist/element/index.js"
+      },
+      "require": {
+        "types": "./dist/element/index.d.cts",
+        "default": "./dist/element/index.cjs"
+      }
     },
     "./native": {
-      "types": "./dist/native/index.d.ts",
-      "import": "./dist/native/index.js",
-      "require": "./dist/native/index.cjs"
+      "import": {
+        "types": "./dist/native/index.d.ts",
+        "default": "./dist/native/index.js"
+      },
+      "require": {
+        "types": "./dist/native/index.d.cts",
+        "default": "./dist/native/index.cjs"
+      }
     },
     "./themes": {
-      "types": "./dist/themes/index.d.ts",
-      "import": "./dist/themes/index.js",
-      "require": "./dist/themes/index.cjs"
+      "import": {
+        "types": "./dist/themes/index.d.ts",
+        "default": "./dist/themes/index.js"
+      },
+      "require": {
+        "types": "./dist/themes/index.d.cts",
+        "default": "./dist/themes/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -142,27 +182,27 @@
     {
       "name": "core (esm)",
       "path": "dist/index.js",
-      "limit": "6 kB"
+      "limit": "14 kB"
     },
     {
       "name": "react adapter",
       "path": "dist/react/index.js",
-      "limit": "8.5 kB"
+      "limit": "15 kB"
     },
     {
       "name": "vue adapter",
       "path": "dist/vue/index.js",
-      "limit": "8.5 kB"
+      "limit": "15 kB"
     },
     {
       "name": "svelte adapter",
       "path": "dist/svelte/index.js",
-      "limit": "8.5 kB"
+      "limit": "10 kB"
     },
     {
       "name": "element adapter",
       "path": "dist/element/index.js",
-      "limit": "8.5 kB"
+      "limit": "10 kB"
     },
     {
       "name": "themes bundle",

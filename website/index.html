@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-site-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veilkit — Every loading state, beautifully. One package, every framework.</title>
+  <meta name="description" content="Production-grade, zero-dependency loading & skeleton UI toolkit for React, Next.js, Vue, Nuxt, Svelte, Angular, Web Components, and React Native." />
+  <link rel="stylesheet" href="../dist/styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <a href="#" class="brand">
+      <span>✦ veilkit</span>
+      <span class="brand-badge">v0.1.0</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#playground" class="nav-link">Playground</a>
+      <a href="#spinners" class="nav-link">Spinners</a>
+      <a href="#themes" class="nav-link">Themes</a>
+      <a href="#platforms" class="nav-link">Platforms</a>
+      <button id="theme-toggle" class="theme-toggle-btn">☀️ Light</button>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-tag">✨ Production Ready • Zero Dependencies • &lt; 6 kB Core</div>
+    <h1 class="hero-title">Every loading state, beautifully.<br/>One package, every framework.</h1>
+    <p class="hero-sub">
+      Synchronized shimmer skeletons, 12 GPU-accelerated animations, 12 spinners, route progress,
+      anti-flicker delay, auto-measure DOM wrapping, and glassmorphic themes.
+    </p>
+    <div class="hero-actions">
+      <a href="#playground" class="btn-primary">Open Live Playground</a>
+      <a href="#platforms" class="btn-secondary">View Framework Guides</a>
+    </div>
+  </section>
+
+  <!-- Interactive Playground -->
+  <section id="playground" class="playground-section">
+    <h2 class="playground-title">Live Playground & Code Generator</h2>
+    <p class="playground-subtitle">Customize presets, animations, and themes in real-time. Copy production code for your framework.</p>
+
+    <div class="playground-card">
+      <!-- Controls -->
+      <div class="controls-pane">
+        <div class="control-group">
+          <label class="control-label" for="select-preset">Layout Preset</label>
+          <select id="select-preset" class="select-control"></select>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="select-anim">Animation (12 GPU)</label>
+          <select id="select-anim" class="select-control"></select>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="select-theme">Theme (11 Styles)</label>
+          <select id="select-theme" class="select-control"></select>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">Speed: <span id="val-speed">1500ms</span></label>
+          <input type="range" id="input-speed" min="600" max="3000" step="100" value="1500" class="input-control" />
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">Radius: <span id="val-radius">10px</span></label>
+          <input type="range" id="input-radius" min="0" max="24" step="2" value="10" class="input-control" />
+        </div>
+      </div>
+
+      <!-- Preview & Code -->
+      <div class="preview-pane">
+        <div id="preview-viewport" class="preview-viewport"></div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <div class="framework-tabs">
+              <button class="framework-tab active" data-fw="react">React / Next</button>
+              <button class="framework-tab" data-fw="vue">Vue / Nuxt</button>
+              <button class="framework-tab" data-fw="svelte">Svelte / Kit</button>
+              <button class="framework-tab" data-fw="angular">Angular</button>
+              <button class="framework-tab" data-fw="element">Web Component</button>
+              <button class="framework-tab" data-fw="native">React Native</button>
+              <button class="framework-tab" data-fw="vanilla">HTML / CDN</button>
+            </div>
+            <button id="copy-code-btn" class="copy-btn">Copy Code</button>
+          </div>
+          <pre><code id="generated-code"></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spinners Section -->
+  <section id="spinners" class="gallery-section">
+    <h2 class="playground-title">12 Spinner Loaders</h2>
+    <p class="playground-subtitle">GPU-accelerated, scalable, accessible spinner animations.</p>
+    <div id="spinners-gallery" class="gallery-grid"></div>
+  </section>
+
+  <!-- Themes Section -->
+  <section id="themes" class="gallery-section">
+    <h2 class="playground-title">11 Built-in Themes</h2>
+    <p class="playground-subtitle">Carefully crafted tokens for light, dark, glass, iOS, neon, and custom brand designs.</p>
+    <div id="themes-gallery" class="gallery-grid"></div>
+  </section>
+
+  <!-- Platform Guides -->
+  <section id="platforms" class="gallery-section">
+    <h2 class="playground-title">Universal Platform Support</h2>
+    <p class="playground-subtitle">Import exactly what you need with zero overhead.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">React & Next.js</div>
+        <div class="gallery-card-desc">Client/Server Component safe, Suspense ready, RouteProgress for App and Pages router.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">import { Skeleton, Veil } from 'veilkit/react';</code></pre>
+      </div>
+
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">Vue 3 & Nuxt</div>
+        <div class="gallery-card-desc">Vue plugin, composables (useVeil, useProgress), directive v-veil="loading", Nuxt module recipe.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">import { VSkeleton, vVeil } from 'veilkit/vue';</code></pre>
+      </div>
+
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">Svelte 4/5 & SvelteKit</div>
+        <div class="gallery-card-desc">Runes-friendly, action use:veil={{ loading }}, SvelteKit beforeNavigate/afterNavigate route progress.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">import { veil } from 'veilkit/svelte';</code></pre>
+      </div>
+
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">Angular (17, 18, 19)</div>
+        <div class="gallery-card-desc">Standalone components, [veil] directive, VeilService with signals, HttpInterceptor helper.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">import { VeilSkeletonComponent } from 'veilkit/angular';</code></pre>
+      </div>
+
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">Web Components & CDN</div>
+        <div class="gallery-card-desc">Zero wrappers for Solid, Qwik, HTMX, Astro, Blade, WordPress. Drop-in script for unpkg/jsdelivr.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">&lt;veil-skeleton preset="card"&gt;&lt;/veil-skeleton&gt;</code></pre>
+      </div>
+
+      <div class="gallery-card" style="align-items: flex-start; text-align: left;">
+        <div class="gallery-card-title">React Native & Expo</div>
+        <div class="gallery-card-desc">Expo Go compatible, Reanimated with Animated fallback, linear gradient with pulse fallback.</div>
+        <pre style="width: 100%;"><code style="font-size: 0.75rem;">import { Skeleton } from 'veilkit/native';</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Released under the MIT License • Built with craftsmanship by the Veilkit team • 2026</p>
+  </footer>
+
+  <script src="../dist/veilkit.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

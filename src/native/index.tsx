@@ -24,9 +24,11 @@ import { VeilThemeName, VeilAnimationName } from '../core/types';
 // Safely probe for optional gradient peer dependencies
 let LinearGradientComponent: any = null;
 try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   LinearGradientComponent = require('expo-linear-gradient').LinearGradient;
 } catch {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     LinearGradientComponent = require('react-native-linear-gradient').default;
   } catch {
     LinearGradientComponent = null;

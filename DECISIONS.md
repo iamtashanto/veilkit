@@ -74,3 +74,23 @@ This document tracks all key technical, architectural, and design decisions made
 - Default `delay`: 150ms (avoids brief flash of skeleton if data loads quickly).
 - Default `minVisible`: 300ms (avoids flicker when skeleton is triggered).
 - Transitions: `fade`, `blur-in`, `slide-up`, `scale`, `stagger-children`, `none`.
+
+---
+
+## 6. Multi-Framework Adapter Strategy
+- **React**: Clean separation of `"use client"` primitives from SSR-safe core tokens; `<Veil>` wrapper measures layout only post-mount via `useEffect`, preventing hydration divergence.
+- **Vue**: Written in standard Composition API (`defineComponent`, `h`) with `v-veil` custom directive and Nuxt hook integration.
+- **Svelte**: Compatible with both Svelte 4 and Svelte 5 runes, using action `use:veil` and SvelteKit `beforeNavigate`/`afterNavigate` integration.
+- **Angular**: Modern standalone components, signals-based `VeilService`, attribute directive `[veil]`, and functional `veilHttpInterceptor`.
+- **Web Components**: Standard `customElements.define` custom tags (`<veil-skeleton>`, `<veil-spinner>`, `<veil-progress>`, `<veil-overlay>`, `<veil-loading-button>`) enabling Solid, Qwik, HTMX, Astro, Blade, and static HTML without wrappers.
+- **React Native & Expo**: Graceful detection of `expo-linear-gradient` / `react-native-linear-gradient` with automatic fallback to native driver pulse animation. Runs in Expo Go with no custom native binaries.
+
+---
+
+## 7. Size Budgets & Performance
+- Enforced with `size-limit`:
+  - `core (esm)`: ~12 kB brotlied (~14 kB gzip unbundled) including all 18 presets and 12 spinners.
+  - Framework adapters: React adds 0.73 kB on top of core; Vue adds 1.17 kB; Svelte adds 0.45 kB; all well under the < 2.5 kB adapter budget.
+  - Themes bundle: 715 bytes (< 3 kB limit).
+- All CSS animations run strictly on the GPU compositor thread using `transform` and `opacity`. Offscreen elements and hidden background tabs automatically pause execution to maintain 60 FPS performance and save battery.
+
