@@ -142,7 +142,7 @@ export function createTheme(themeInput: CustomThemeInput): VeilThemeTokens {
 /**
  * Get theme tokens by name or object
  */
-export function getThemeTokens(theme?: VeilThemeName | CustomThemeInput): VeilThemeTokens {
+export function getThemeTokens(theme?: VeilThemeName | CustomThemeInput | string): VeilThemeTokens {
   if (!theme) return BUILTIN_THEMES.light;
   if (typeof theme === 'string') {
     if (theme in BUILTIN_THEMES) {
