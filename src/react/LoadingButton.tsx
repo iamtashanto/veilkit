@@ -35,55 +35,60 @@ export function LoadingButton({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const controllerRef = useRef<ReturnType<typeof wrapLoadingButton> | null>(null);
 
+  // Keep latest callbacks in ref to avoid recreation
+  const callbacksRef = useRef({ onStatusChange, onClick });
+  callbacksRef.current = { onStatusChange, onClick };
+
+  // Initialize/reconfigure controller when core options change
   useEffect(() => {
     if (!buttonRef.current) return;
 
-    if (!controllerRef.current) {
-      controllerRef.current = wrapLoadingButton(buttonRef.current, {
-        status,
-        loading,
-        styleType,
-        spinner,
-        spinnerPlacement,
-        loadingText,
-        successText,
-        errorText,
-        resetAfter,
-        progress,
-        pressFeedback,
-        resultAnimation,
-        haptics,
-        onStatusChange,
-        onClick,
-      });
-    } else {
-      if (status !== undefined) {
-        controllerRef.current.setStatus(status);
-      } else {
-        controllerRef.current.setLoading(loading, loadingText);
-      }
-    }
+    const controller = wrapLoadingButton(buttonRef.current, {
+      status,
+      loading,
+      styleType,
+      spinner,
+      spinnerPlacement,
+      loadingText,
+      successText,
+      errorText,
+      resetAfter,
+      progress,
+      pressFeedback,
+      resultAnimation,
+      haptics,
+      onStatusChange: (s) => callbacksRef.current.onStatusChange?.(s),
+      onClick: (e) => callbacksRef.current.onClick?.(e),
+    });
+
+    controllerRef.current = controller;
 
     return () => {
-      if (controllerRef.current) {
-        controllerRef.current.destroy();
-        controllerRef.current = null;
-      }
+      controller.destroy();
+      controllerRef.current = null;
     };
   }, [
-    status,
-    loading,
     styleType,
     spinner,
     spinnerPlacement,
-    loadingText,
-    successText,
-    errorText,
     resetAfter,
-    progress,
     pressFeedback,
     resultAnimation,
+    haptics,
   ]);
+
+  // Synchronize state without destroying controller
+  useEffect(() => {
+    if (!controllerRef.current) return;
+
+    if (status !== undefined) {
+      if (controllerRef.current.getStatus() !== status) {
+        controllerRef.current.setStatus(status);
+      }
+    } else {
+      controllerRef.current.setLoading(loading, loadingText);
+    }
+  }, [status, loading, loadingText]);
 
   return (
     <button

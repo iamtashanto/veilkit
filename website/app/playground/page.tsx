@@ -591,10 +591,10 @@ export default function PlaygroundPage() {
               </div>
 
               {/* THE LIVE BUTTON STAGE */}
-              <div className="py-8 bg-[#080d16] rounded-2xl border border-white/[0.08] flex flex-col items-center justify-center space-y-4">
+              <div className="py-8 px-4 bg-[#080d16] rounded-2xl border border-white/[0.08] flex flex-col items-center justify-center space-y-5">
                 {/* REAL LIVE VEILKIT LOADING BUTTON */}
                 <LoadingButton
-                  key={`${buttonStyle}-${buttonStatus}-${resultAnim}-${pressFeedback}`}
+                  key={`${buttonStyle}-${resultAnim}-${pressFeedback}`}
                   styleType={buttonStyle as any}
                   status={buttonStatus}
                   resultAnimation={resultAnim}
@@ -607,7 +607,7 @@ export default function PlaygroundPage() {
                   onClick={async () => {
                     await new Promise((res) => setTimeout(res, 1800));
                   }}
-                  className="px-8 py-3.5 rounded-xl font-bold text-sm bg-sky-500 hover:bg-sky-400 text-white shadow-xl shadow-sky-500/25 cursor-pointer min-w-[220px]"
+                  className="px-8 py-3.5 rounded-xl font-bold text-sm bg-sky-500 hover:bg-sky-400 text-white shadow-xl shadow-sky-500/25 cursor-pointer min-w-[240px]"
                 >
                   Confirm Order ({buttonStyle})
                 </LoadingButton>
@@ -630,7 +630,7 @@ export default function PlaygroundPage() {
                   </button>
                   <button
                     onClick={() => setButtonStatus('idle')}
-                    className="px-3 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white text-xs border border-slate-800"
+                    className="px-3 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white text-xs border border-slate-800 cursor-pointer"
                   >
                     Reset Idle
                   </button>
@@ -640,6 +640,37 @@ export default function PlaygroundPage() {
               {/* Status readout */}
               <div className="text-xs font-mono text-slate-400 text-center">
                 Current state: <span className="text-sky-400 font-bold">{buttonStatus}</span> • styleType: <span className="text-cyan-400 font-bold">{buttonStyle}</span> • resultAnimation: <span className="text-purple-400">{resultAnim}</span>
+              </div>
+
+              {/* ALL 16 BUTTON STYLES INTERACTIVE SHOWCASE GRID */}
+              <div className="pt-6 border-t border-white/[0.08] space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-base font-bold text-white">All 16 Button Styles Interactive Matrix</h4>
+                    <p className="text-xs text-slate-400">Click any individual button to test its self-contained promise lifecycle.</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                  {buttonStyles.map((st) => (
+                    <LoadingButton
+                      key={`grid-${st}-${resultAnim}-${pressFeedback}`}
+                      styleType={st as any}
+                      resultAnimation={resultAnim}
+                      pressFeedback={pressFeedback}
+                      loadingText="Loading..."
+                      successText="✓ Success!"
+                      errorText="✕ Error"
+                      resetAfter={2000}
+                      onClick={async () => {
+                        await new Promise((res) => setTimeout(res, 1500));
+                      }}
+                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-sky-500/50 text-slate-200 transition-all cursor-pointer flex items-center justify-center min-h-[42px]"
+                    >
+                      {st}
+                    </LoadingButton>
+                  ))}
+                </div>
               </div>
             </div>
 

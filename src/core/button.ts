@@ -45,10 +45,17 @@ export function wrapLoadingButton(
   injectButtonKeyframes();
 
   let currentStatus: ButtonStatus = props.status || (props.loading ? 'loading' : 'idle');
-  let originalWidth: string = '';
-  let originalHeight: string = '';
+  let originalWidth: string = buttonEl.style.width || '';
+  let originalHeight: string = buttonEl.style.height || '';
   let originalHtml: string = buttonEl.innerHTML;
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // Immediately store dimensions if rendered
+  if (typeof window !== 'undefined') {
+    const rect = buttonEl.getBoundingClientRect();
+    if (rect.width > 0 && !originalWidth) originalWidth = `${rect.width}px`;
+    if (rect.height > 0 && !originalHeight) originalHeight = `${rect.height}px`;
+  }
 
   // Press Feedback Listeners
   const pressFeedback: ButtonPressFeedback = props.pressFeedback || 'press-scale';
@@ -80,8 +87,8 @@ export function wrapLoadingButton(
       );
       buttonEl.removeAttribute('aria-disabled');
       buttonEl.removeAttribute('aria-busy');
-      buttonEl.style.width = originalWidth;
-      buttonEl.style.height = originalHeight;
+      if (originalWidth) buttonEl.style.width = originalWidth;
+      if (originalHeight) buttonEl.style.height = originalHeight;
       buttonEl.innerHTML = originalHtml;
       return;
     }
@@ -89,10 +96,6 @@ export function wrapLoadingButton(
     // Lock dimensions on first transition away from idle
     if (prevStatus === 'idle') {
       const rect = buttonEl.getBoundingClientRect();
-      originalWidth = buttonEl.style.width;
-      originalHeight = buttonEl.style.height;
-      originalHtml = buttonEl.innerHTML;
-
       if (rect.width > 0) {
         buttonEl.style.width = `${rect.width}px`;
       }

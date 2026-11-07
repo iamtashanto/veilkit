@@ -49,7 +49,15 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
   const size = props.size !== undefined ? (typeof props.size === 'number' ? `${props.size}px` : props.size) : '28px';
   const color = props.color || 'var(--veil-progress-color, #3b82f6)';
   const secondaryColor = props.secondaryColor || 'rgba(0, 0, 0, 0.12)';
-  const duration = props.speed !== undefined ? (typeof props.speed === 'number' ? `${props.speed}ms` : props.speed) : undefined;
+
+  function getDuration(baseMs: number): string {
+    if (props.speed === undefined) return `${baseMs}ms`;
+    if (typeof props.speed === 'string') return props.speed;
+    if (props.speed > 0 && props.speed <= 10) {
+      return `${Math.round(baseMs / props.speed)}ms`;
+    }
+    return `${Math.round(props.speed)}ms`;
+  }
 
   const container = document.createElement('div');
   container.className = `veil-spinner veil-spinner-${type} ${props.glass ? 'veil-spinner-glass' : ''} ${props.className || ''}`.trim();
@@ -79,7 +87,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       ring.style.borderRadius = '50%';
       ring.style.border = `3px solid ${secondaryColor}`;
       ring.style.borderTopColor = color;
-      ring.style.animation = `veil-spin ${duration || '800ms'} linear infinite`;
+      ring.style.animation = `veil-spin ${getDuration(800)} linear infinite`;
       ring.style.boxSizing = 'border-box';
       container.appendChild(ring);
       break;
@@ -93,7 +101,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       ring.style.border = `3px solid transparent`;
       ring.style.borderTopColor = color;
       ring.style.borderBottomColor = color;
-      ring.style.animation = `veil-spin ${duration || '900ms'} cubic-bezier(0.5, 0, 0.5, 1) infinite`;
+      ring.style.animation = `veil-spin ${getDuration(900)} cubic-bezier(0.5, 0, 0.5, 1) infinite`;
       ring.style.boxSizing = 'border-box';
       container.appendChild(ring);
       break;
@@ -107,7 +115,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         dot.style.height = '28%';
         dot.style.borderRadius = '50%';
         dot.style.backgroundColor = color;
-        dot.style.animation = `veil-dot-bounce ${duration || '1200ms'} ease-in-out infinite`;
+        dot.style.animation = `veil-dot-bounce ${getDuration(1200)} ease-in-out infinite`;
         dot.style.animationDelay = `${i * 160}ms`;
         container.appendChild(dot);
       }
@@ -122,7 +130,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         bar.style.height = '100%';
         bar.style.borderRadius = '2px';
         bar.style.backgroundColor = color;
-        bar.style.animation = `veil-bar-wave ${duration || '1000ms'} ease-in-out infinite`;
+        bar.style.animation = `veil-bar-wave ${getDuration(1000)} ease-in-out infinite`;
         bar.style.animationDelay = `${i * 140}ms`;
         container.appendChild(bar);
       }
@@ -135,7 +143,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       pulseCircle.style.height = '100%';
       pulseCircle.style.borderRadius = '50%';
       pulseCircle.style.backgroundColor = color;
-      pulseCircle.style.animation = `veil-pulse-scale ${duration || '1200ms'} ease-out infinite`;
+      pulseCircle.style.animation = `veil-pulse-scale ${getDuration(1200)} ease-out infinite`;
       container.appendChild(pulseCircle);
       break;
     }
@@ -152,7 +160,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       orbitRing.style.width = '100%';
       orbitRing.style.height = '100%';
       orbitRing.style.position = 'absolute';
-      orbitRing.style.animation = `veil-spin ${duration || '1200ms'} linear infinite`;
+      orbitRing.style.animation = `veil-spin ${getDuration(1200)} linear infinite`;
 
       const satellite = document.createElement('div');
       satellite.style.width = '24%';
@@ -176,7 +184,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         line.style.height = '80%';
         line.style.borderRadius = '3px';
         line.style.backgroundColor = color;
-        line.style.animation = `veil-wave-dance ${duration || '1100ms'} ease-in-out infinite`;
+        line.style.animation = `veil-wave-dance ${getDuration(1100)} ease-in-out infinite`;
         line.style.animationDelay = `${i * 110}ms`;
         container.appendChild(line);
       }
@@ -189,7 +197,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       ball.style.height = '60%';
       ball.style.borderRadius = '50%';
       ball.style.backgroundColor = color;
-      ball.style.animation = `veil-bounce-ball ${duration || '900ms'} cubic-bezier(0.28, 0.84, 0.42, 1) infinite`;
+      ball.style.animation = `veil-bounce-ball ${getDuration(900)} cubic-bezier(0.28, 0.84, 0.42, 1) infinite`;
       container.appendChild(ball);
       break;
     }
@@ -204,7 +212,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         spoke.style.borderRadius = '2px';
         spoke.style.transformOrigin = '50% 190%';
         spoke.style.transform = `rotate(${i * 30}deg) translateY(-90%)`;
-        spoke.style.animation = `veil-ios-fade ${duration || '1000ms'} linear infinite`;
+        spoke.style.animation = `veil-ios-fade ${getDuration(1000)} linear infinite`;
         spoke.style.animationDelay = `-${(12 - i) * (1000 / 12)}ms`;
         container.appendChild(spoke);
       }
@@ -218,7 +226,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       orb.style.borderRadius = '50%';
       orb.style.background = `radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), ${color} 70%)`;
       orb.style.boxShadow = `0 4px 12px ${color}44, inset 0 2px 4px rgba(255,255,255,0.6)`;
-      orb.style.animation = `veil-glass-orbit ${duration || '1600ms'} ease-in-out infinite`;
+      orb.style.animation = `veil-glass-orbit ${getDuration(1600)} ease-in-out infinite`;
       container.appendChild(orb);
       break;
     }
@@ -228,7 +236,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       shape.style.width = '80%';
       shape.style.height = '80%';
       shape.style.backgroundColor = color;
-      shape.style.animation = `veil-morph-shape ${duration || '2000ms'} ease-in-out infinite`;
+      shape.style.animation = `veil-morph-shape ${getDuration(2000)} ease-in-out infinite`;
       container.appendChild(shape);
       break;
     }
@@ -258,7 +266,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       meterCircle.setAttribute('stroke-dasharray', '88');
       meterCircle.setAttribute('stroke-dashoffset', '25');
       meterCircle.setAttribute('stroke-linecap', 'round');
-      meterCircle.style.animation = `veil-spin ${duration || '1200ms'} linear infinite`;
+      meterCircle.style.animation = `veil-spin ${getDuration(1200)} linear infinite`;
       meterCircle.style.transformOrigin = '50% 50%';
 
       svg.append(bgCircle, meterCircle);
@@ -274,7 +282,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       arc.style.background = `conic-gradient(from 0deg, transparent 20%, ${color} 100%)`;
       arc.style.mask = 'radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2.5px))';
       arc.style.webkitMask = 'radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2.5px))';
-      arc.style.animation = `veil-spin ${duration || '750ms'} linear infinite`;
+      arc.style.animation = `veil-spin ${getDuration(750)} linear infinite`;
       container.appendChild(arc);
       break;
     }
@@ -286,7 +294,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         ring.style.inset = '0';
         ring.style.borderRadius = '50%';
         ring.style.border = `2px solid ${color}`;
-        ring.style.animation = `veil-pulse-ring ${duration || '1400ms'} cubic-bezier(0, 0.2, 0.8, 1) infinite`;
+        ring.style.animation = `veil-pulse-ring ${getDuration(1400)} cubic-bezier(0, 0.2, 0.8, 1) infinite`;
         ring.style.animationDelay = `${i * 700}ms`;
         container.appendChild(ring);
       }
@@ -303,7 +311,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         dot.style.backgroundColor = color;
         dot.style.transformOrigin = '50% 250%';
         dot.style.transform = `rotate(${i * 45}deg) translateY(-150%)`;
-        dot.style.animation = `veil-fade-seq ${duration || '1000ms'} linear infinite`;
+        dot.style.animation = `veil-fade-seq ${getDuration(1000)} linear infinite`;
         dot.style.animationDelay = `-${(8 - i) * (1000 / 8)}ms`;
         container.appendChild(dot);
       }
@@ -321,7 +329,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
           dot.style.aspectRatio = '1 / 1';
           dot.style.borderRadius = '50%';
           dot.style.backgroundColor = color;
-          dot.style.animation = `veil-dot-bounce ${duration || '1200ms'} ease-in-out infinite`;
+          dot.style.animation = `veil-dot-bounce ${getDuration(1200)} ease-in-out infinite`;
           dot.style.animationDelay = `${(row + col) * 110}ms`;
           container.appendChild(dot);
         }
@@ -335,7 +343,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       sq.style.height = '60%';
       sq.style.backgroundColor = color;
       sq.style.borderRadius = '4px';
-      sq.style.animation = `veil-square-flip ${duration || '1200ms'} ease-in-out infinite`;
+      sq.style.animation = `veil-square-flip ${getDuration(1200)} ease-in-out infinite`;
       container.appendChild(sq);
       break;
     }
@@ -350,7 +358,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         cube.style.aspectRatio = '1 / 1';
         cube.style.backgroundColor = color;
         cube.style.borderRadius = '2px';
-        cube.style.animation = `veil-cube-fold ${duration || '1400ms'} ease-in-out infinite`;
+        cube.style.animation = `veil-cube-fold ${getDuration(1400)} ease-in-out infinite`;
         cube.style.animationDelay = `${i * 175}ms`;
         container.appendChild(cube);
       }
@@ -365,7 +373,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       hg.style.borderLeftColor = 'transparent';
       hg.style.borderRightColor = 'transparent';
       hg.style.borderRadius = '50%';
-      hg.style.animation = `veil-hourglass ${duration || '1200ms'} cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite`;
+      hg.style.animation = `veil-hourglass ${getDuration(1200)} cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite`;
       container.appendChild(hg);
       break;
     }
@@ -384,7 +392,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       path.setAttribute('stroke-dasharray', '80');
       path.setAttribute('stroke-dashoffset', '0');
       path.setAttribute('stroke-linecap', 'round');
-      path.style.animation = `veil-dash ${duration || '1400ms'} linear infinite`;
+      path.style.animation = `veil-dash ${getDuration(1400)} linear infinite`;
 
       svg.appendChild(path);
       container.appendChild(svg);
@@ -406,7 +414,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       path.setAttribute('stroke-dashoffset', '60');
       path.setAttribute('stroke-linecap', 'round');
       path.setAttribute('stroke-linejoin', 'round');
-      path.style.animation = `veil-ecg ${duration || '1200ms'} ease-in-out infinite`;
+      path.style.animation = `veil-ecg ${getDuration(1200)} ease-in-out infinite`;
 
       svg.appendChild(path);
       container.appendChild(svg);
@@ -422,7 +430,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         bar.style.height = '100%';
         bar.style.borderRadius = '2px';
         bar.style.backgroundColor = color;
-        bar.style.animation = `veil-eq-bounce ${duration || '800ms'} ease-in-out infinite alternate`;
+        bar.style.animation = `veil-eq-bounce ${getDuration(800)} ease-in-out infinite alternate`;
         bar.style.animationDelay = `${delays[i]}ms`;
         container.appendChild(bar);
       }
@@ -434,7 +442,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       wrap.style.width = '100%';
       wrap.style.height = '100%';
       wrap.style.position = 'relative';
-      wrap.style.animation = `veil-spin ${duration || '1800ms'} linear infinite`;
+      wrap.style.animation = `veil-spin ${getDuration(1800)} linear infinite`;
 
       for (let i = 0; i < 2; i++) {
         const dot = document.createElement('div');
@@ -443,7 +451,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         dot.style.height = '45%';
         dot.style.borderRadius = '50%';
         dot.style.backgroundColor = color;
-        dot.style.animation = `veil-chase ${duration || '1800ms'} ease-in-out infinite`;
+        dot.style.animation = `veil-chase ${getDuration(1800)} ease-in-out infinite`;
         if (i === 0) {
           dot.style.top = '0';
           dot.style.left = '0';
@@ -466,7 +474,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         dot.style.height = '24%';
         dot.style.borderRadius = '50%';
         dot.style.backgroundColor = color;
-        dot.style.animation = `veil-typing ${duration || '1000ms'} ease-in-out infinite`;
+        dot.style.animation = `veil-typing ${getDuration(1000)} ease-in-out infinite`;
         dot.style.animationDelay = `${i * 150}ms`;
         container.appendChild(dot);
       }
@@ -488,7 +496,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       liquid.style.backgroundColor = color;
       liquid.style.opacity = '0.7';
       liquid.style.borderRadius = '40%';
-      liquid.style.animation = `veil-liquid-spin ${duration || '2000ms'} linear infinite`;
+      liquid.style.animation = `veil-liquid-spin ${getDuration(2000)} linear infinite`;
       wrap.appendChild(liquid);
       container.appendChild(wrap);
       break;
@@ -512,7 +520,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         ring.style.borderRadius = '50%';
         ring.style.border = `1.5px solid ${color}`;
         ring.style.transform = `rotate(${angle}deg)`;
-        ring.style.animation = `veil-atom-spin ${duration || '1600ms'} linear infinite`;
+        ring.style.animation = `veil-atom-spin ${getDuration(1600)} linear infinite`;
         container.appendChild(ring);
       }
       break;
@@ -543,7 +551,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       hourHand.style.top = '20%';
       hourHand.style.left = 'calc(50% - 1px)';
       hourHand.style.transformOrigin = 'bottom center';
-      hourHand.style.animation = `veil-spin ${duration || '3000ms'} linear infinite`;
+      hourHand.style.animation = `veil-spin ${getDuration(3000)} linear infinite`;
 
       const minuteHand = document.createElement('div');
       minuteHand.style.position = 'absolute';
@@ -553,7 +561,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       minuteHand.style.top = '8%';
       minuteHand.style.left = 'calc(50% - 1px)';
       minuteHand.style.transformOrigin = 'bottom center';
-      minuteHand.style.animation = `veil-spin ${duration || '1000ms'} linear infinite`;
+      minuteHand.style.animation = `veil-spin ${getDuration(1000)} linear infinite`;
 
       face.append(center, hourHand, minuteHand);
       container.appendChild(face);
@@ -575,7 +583,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
       beam.style.borderRadius = '50%';
       beam.style.background = `conic-gradient(from 0deg, transparent 60%, ${color} 100%)`;
       beam.style.opacity = '0.6';
-      beam.style.animation = `veil-spin ${duration || '1500ms'} linear infinite`;
+      beam.style.animation = `veil-spin ${getDuration(1500)} linear infinite`;
 
       radarWrap.appendChild(beam);
       container.appendChild(radarWrap);
@@ -590,7 +598,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         dot.style.height = '24%';
         dot.style.borderRadius = '50%';
         dot.style.backgroundColor = color;
-        dot.style.animation = `veil-ellipsis ${duration || '1200ms'} ease-in-out infinite`;
+        dot.style.animation = `veil-ellipsis ${getDuration(1200)} ease-in-out infinite`;
         dot.style.animationDelay = `${i * 200}ms`;
         container.appendChild(dot);
       }
@@ -609,7 +617,7 @@ export function createSpinner(props: SpinnerProps = {}): HTMLElement {
         petal.style.transformOrigin = '50% 100%';
         petal.style.top = '2%';
         petal.style.transform = `rotate(${i * 60}deg)`;
-        petal.style.animation = `veil-flower-bloom ${duration || '1600ms'} ease-in-out infinite`;
+        petal.style.animation = `veil-flower-bloom ${getDuration(1600)} ease-in-out infinite`;
         petal.style.animationDelay = `${i * 120}ms`;
         container.appendChild(petal);
       }
