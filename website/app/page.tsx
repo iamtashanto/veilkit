@@ -1,6 +1,7 @@
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { DemoTabs } from './components/DemoTabs';
+import { LiveSimulationSection } from './components/LiveSimulationSection';
 import { CustomSkeletonBuilder } from './components/CustomSkeletonBuilder';
 import { ComparisonMatrix } from './components/ComparisonMatrix';
 import { FrameworkShowcase } from './components/FrameworkShowcase';
@@ -41,6 +42,9 @@ export default function Home() {
 
       <main className="flex-1">
         <HeroSection />
+
+        {/* Live Production Skeleton Simulation */}
+        <LiveSimulationSection />
 
         <DemoTabs />
 
@@ -140,6 +144,40 @@ export default function Home() {
 
         {/* FAQ Section */}
         <FaqSection />
+
+        {/* SupportKori Sponsor Section */}
+        <section className="py-16 border-t border-white/[0.08] relative bg-gradient-to-b from-[#0a0f1d]/50 to-transparent">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-mono font-semibold">
+              <span>☕ Community & Creator Support</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              Support the Continuous Development of Veilkit
+            </h2>
+            <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+              Veilkit is an independent, 100% free and open-source project created and maintained by <strong className="text-white">Md Tanvir Ahamed Shanto (@iamtashanto)</strong>. Your contributions directly fund new framework adapters, animation presets, and ongoing ecosystem maintenance.
+            </p>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="https://www.supportkori.com/iamtashanto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-sm shadow-xl shadow-amber-500/20 transition-all hover:scale-105 flex items-center gap-2"
+              >
+                <span>☕ Support on SupportKori</span>
+                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-mono">supportkori.com/iamtashanto</span>
+              </a>
+              <a
+                href="https://github.com/iamtashanto/veilkit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold text-sm border border-slate-700 transition-colors flex items-center gap-2"
+              >
+                <span>⭐ Star on GitHub</span>
+              </a>
+            </div>
+          </div>
+        </section>
 
         {/* Final CTA Banner */}
         <section className="py-20 border-t border-white/[0.08] relative overflow-hidden">

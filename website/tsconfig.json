@@ -19,7 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "veilkit": ["../src/index.ts"],
+      "veilkit/react": ["../src/react/index.ts"],
+      "veilkit/vue": ["../src/vue/index.ts"],
+      "veilkit/svelte": ["../src/svelte/index.ts"],
+      "veilkit/angular": ["../src/angular/index.ts"],
+      "veilkit/element": ["../src/element/index.ts"],
+      "veilkit/themes": ["../src/themes/index.ts"],
+      "veilkit/*": ["../src/*"]
     }
   },
   "include": [

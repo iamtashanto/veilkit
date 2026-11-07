@@ -10,6 +10,7 @@
 [![npm provenance](https://img.shields.io/badge/npm-provenance-0284c7?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/veilkit)
 [![Website](https://img.shields.io/badge/website-veilkit.tashanto.com-6366f1?style=for-the-badge&logo=google-chrome&logoColor=white)](https://veilkit.tashanto.com)
 [![GitHub](https://img.shields.io/badge/github-iamtashanto%2Fveilkit-181717?style=for-the-badge&logo=github)](https://github.com/iamtashanto/veilkit)
+[![Support on SupportKori](https://img.shields.io/badge/support-supportkori.com%2Fiamtashanto-ff813f?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white)](https://www.supportkori.com/iamtashanto)
 [![License: MIT](https://img.shields.io/badge/license-MIT-amber.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 A production-grade, zero-dependency loading & skeleton UI toolkit built for the modern web and mobile ecosystem.
@@ -902,6 +903,7 @@ npm audit signatures
 
 - **Creator & Maintainer**: **Md Tanvir Ahamed Shanto**
 - **Website & Documentation**: [veilkit.tashanto.com](https://veilkit.tashanto.com)
+- **Support Creator (SupportKori)**: [supportkori.com/iamtashanto](https://www.supportkori.com/iamtashanto)
 - **GitHub**: [@iamtashanto](https://github.com/iamtashanto)
 - **npm Account**: [@mdtanvirahamedshanto](https://www.npmjs.com/~mdtanvirahamedshanto)
 - **Repository**: [github.com/iamtashanto/veilkit](https://github.com/iamtashanto/veilkit)

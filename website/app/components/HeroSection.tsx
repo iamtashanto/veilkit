@@ -2,11 +2,22 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { SkeletonPreset } from 'veilkit/react';
 
 export function HeroSection() {
   const [activeTab, setActiveTab] = useState<'npm' | 'pnpm' | 'yarn' | 'bun'>('npm');
   const [copied, setCopied] = useState(false);
   const [isSkeleton, setIsSkeleton] = useState(true);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const simulateFetch = () => {
+    setIsSimulating(true);
+    setIsSkeleton(true);
+    setTimeout(() => {
+      setIsSkeleton(false);
+      setIsSimulating(false);
+    }, 850);
+  };
 
   const installCmds = {
     npm: 'npm install veilkit',
@@ -111,6 +122,15 @@ export function HeroSection() {
             >
               View 45+ Presets
             </Link>
+            <a
+              href="https://www.supportkori.com/iamtashanto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-sm font-semibold flex items-center gap-1.5 transition-all hover:scale-[1.02]"
+              title="Support Creator on SupportKori"
+            >
+              <span>☕ Support Creator</span>
+            </a>
           </div>
         </div>
 
@@ -128,6 +148,15 @@ export function HeroSection() {
 
               {/* State Toggle Switch */}
               <div className="flex items-center gap-3">
+                <button
+                  onClick={simulateFetch}
+                  disabled={isSimulating}
+                  className="hidden sm:flex px-3 py-1 rounded-lg text-xs font-semibold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 transition-all items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  title="Run simulated async network request"
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full bg-cyan-400 ${isSimulating ? 'animate-ping' : ''}`} />
+                  <span>{isSimulating ? 'Fetching (850ms)...' : '⚡️ Simulate Load'}</span>
+                </button>
                 <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   60.0 FPS GPU
@@ -157,68 +186,15 @@ export function HeroSection() {
             <div className="p-6 sm:p-8 transition-all duration-300">
               {isSkeleton ? (
                 /* Skeleton State */
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
-                  {/* Left Skeleton Card */}
-                  <div className="p-5 rounded-xl border border-white/[0.08] bg-slate-900/60 space-y-4">
-                    <div className="w-full h-44 rounded-lg bg-slate-800/80 relative overflow-hidden">
-                      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                    </div>
-                    <div className="w-20 h-5 rounded-full bg-slate-800/80 relative overflow-hidden">
-                      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="w-4/5 h-6 rounded bg-slate-800/80 relative overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                      </div>
-                      <div className="w-3/5 h-4 rounded bg-slate-800/80 relative overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                      </div>
-                    </div>
-                    <div className="pt-2 flex items-center justify-between">
-                      <div className="w-24 h-7 rounded bg-slate-800/80 relative overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                      </div>
-                      <div className="w-28 h-9 rounded-lg bg-slate-800/80 relative overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                      </div>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn items-start">
+                  {/* Left Skeleton: Real Veilkit Preset */}
+                  <div className="p-4 rounded-2xl border border-white/[0.08] bg-slate-900/60 shadow-inner">
+                    <SkeletonPreset name="product-card" shape="rounded" animation="shimmer" />
                   </div>
 
-                  {/* Right Skeleton Stats */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-4 rounded-xl border border-white/[0.08] bg-slate-900/60 space-y-2">
-                        <div className="w-16 h-3 rounded bg-slate-800/80 relative overflow-hidden">
-                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                        </div>
-                        <div className="w-24 h-7 rounded bg-slate-800/80 relative overflow-hidden">
-                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                        </div>
-                      </div>
-                      <div className="p-4 rounded-xl border border-white/[0.08] bg-slate-900/60 space-y-2">
-                        <div className="w-16 h-3 rounded bg-slate-800/80 relative overflow-hidden">
-                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                        </div>
-                        <div className="w-24 h-7 rounded bg-slate-800/80 relative overflow-hidden">
-                          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                        </div>
-                      </div>
-                    </div>
-                    {/* Simulated chart skeleton */}
-                    <div className="p-4 rounded-xl border border-white/[0.08] bg-slate-900/60 h-44 relative overflow-hidden flex flex-col justify-between">
-                      <div className="w-36 h-4 rounded bg-slate-800/80" />
-                      <div className="flex items-end gap-3 h-28 pt-2">
-                        {[40, 65, 50, 85, 70, 95, 60, 80].map((h, i) => (
-                          <div
-                            key={i}
-                            style={{ height: `${h}%` }}
-                            className="flex-1 rounded-t bg-slate-800/80 relative overflow-hidden"
-                          >
-                            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_infinite] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent" />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  {/* Right Skeleton: Real Veilkit Preset */}
+                  <div className="p-4 rounded-2xl border border-white/[0.08] bg-slate-900/60 shadow-inner">
+                    <SkeletonPreset name="chart-bar" shape="rounded" animation="shimmer" />
                   </div>
                 </div>
               ) : (

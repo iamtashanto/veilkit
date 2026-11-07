@@ -209,6 +209,41 @@ export function ProfileScreen({ loading }) {
           <pre className="p-6 text-xs sm:text-sm font-mono text-slate-300 overflow-x-auto leading-relaxed">
             <code>{snippets[activeFw]}</code>
           </pre>
+
+          {/* Framework SEO Meta & Highlights Bar */}
+          <div className="p-4 bg-slate-950/90 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-slate-300 font-mono">
+              <span className="text-sky-400 font-bold">$</span>
+              <span className="text-white">npm install veilkit</span>
+              <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                0 peer baggage
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="text-slate-400">
+                {activeFw === 'react'
+                  ? '⚡️ Next.js 15/16 App Router & RSC Safe'
+                  : activeFw === 'vue'
+                  ? '⚡️ Vue 3 & Nuxt 3 v-veil directive'
+                  : activeFw === 'svelte'
+                  ? '⚡️ Svelte 5 Runes ($state) & Action'
+                  : activeFw === 'angular'
+                  ? '⚡️ Angular 17-19 Signals & HTTP Interceptor'
+                  : activeFw === 'element'
+                  ? '⚡️ Native Custom Elements (Solid, Qwik, HTMX)'
+                  : activeFw === 'native'
+                  ? '⚡️ Expo & React Native Reanimated 60 FPS'
+                  : '⚡️ Vanilla JS & CDN (unpkg/jsdelivr)'}
+              </span>
+              <a
+                href={`/docs#${activeFw}`}
+                className="text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-2"
+              >
+                Docs →
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

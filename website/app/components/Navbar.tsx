@@ -19,8 +19,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-500 to-cyan-400 flex items-center justify-center font-bold text-white text-lg shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
-              ✦
+            <div className="w-9 h-9 rounded-xl bg-[#0c1322] border border-white/10 p-1 flex items-center justify-center shadow-lg shadow-sky-500/10 group-hover:border-sky-500/40 group-hover:scale-105 transition-all">
+              <img src="/icon.svg" alt="Veilkit Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold tracking-tight text-white group-hover:text-sky-400 transition-colors">
@@ -71,6 +71,17 @@ export function Navbar() {
                 {copied ? '✓ Copied!' : 'Copy'}
               </span>
             </button>
+
+            <a
+              href="https://www.supportkori.com/iamtashanto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-semibold shadow-sm transition-all hover:scale-[1.02]"
+              title="Support creator on SupportKori"
+            >
+              <span className="text-sm">☕</span>
+              <span>Support</span>
+            </a>
 
             <a
               href="https://github.com/iamtashanto/veilkit"
@@ -156,6 +167,14 @@ export function Navbar() {
             Comparison Matrix
           </Link>
           <div className="pt-2 flex flex-col gap-2">
+            <a
+              href="https://www.supportkori.com/iamtashanto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full text-center px-4 py-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5"
+            >
+              <span>☕ Support on SupportKori</span>
+            </a>
             <button
               onClick={copyInstall}
               className="w-full text-center px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-sky-400"
