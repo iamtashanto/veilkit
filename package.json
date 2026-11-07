@@ -2,15 +2,19 @@
   "name": "veilkit",
   "version": "0.1.0",
   "description": "Every loading state, beautifully. One package, every framework.",
-  "author": "Md Tanvir Ahamed Shanto",
+  "author": "Md Tanvir Ahamed Shanto (mdtanvirahamedshanto)",
   "license": "MIT",
-  "homepage": "https://veilkit.dev",
+  "homepage": "https://veilkit.tashanto.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/veilkit/veilkit.git"
+    "url": "git+https://github.com/iamtashanto/veilkit.git"
   },
   "bugs": {
-    "url": "https://github.com/veilkit/veilkit/issues"
+    "url": "https://github.com/iamtashanto/veilkit/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "keywords": [
     "skeleton",

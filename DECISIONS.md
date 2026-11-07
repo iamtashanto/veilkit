@@ -94,3 +94,12 @@ This document tracks all key technical, architectural, and design decisions made
   - Themes bundle: 715 bytes (< 3 kB limit).
 - All CSS animations run strictly on the GPU compositor thread using `transform` and `opacity`. Offscreen elements and hidden background tabs automatically pause execution to maintain 60 FPS performance and save battery.
 
+---
+
+## 8. Trusted Publisher, GitHub Provenance & CI/CD
+- **Trusted Publisher (OIDC)**: Automated releases configured for GitHub user `@iamtashanto`, repository `iamtashanto/veilkit`, workflow file `.github/workflows/release.yml`, and environment `npm-publish`.
+- **npm Account**: `mdtanvirahamedshanto`.
+- **Homepage & Docs**: `https://veilkit.tashanto.com`.
+- **Provenance**: Cryptographically signed build attestations published automatically to the npm registry with `--provenance` and `publishConfig.provenance: true`.
+
+

@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release & Publish to npm
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write
+      id-token: write # Required for npm provenance / Trusted Publisher (OIDC)
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint & Code Quality
+        run: pnpm lint
+
+      - name: TypeScript Typecheck
+        run: pnpm typecheck
+
+      - name: Run Test Suite
+        run: pnpm test
+
+      - name: Build All Artifacts (ESM, CJS, DTS, CDN & CSS)
+        run: pnpm build:all
+
+      - name: Validate Package with Publint
+        run: pnpm publint
+
+      - name: Publish to npm with Provenance
+        run: |
+          # If an NPM_TOKEN secret exists, configure it; otherwise use npm Trusted Publisher (OIDC)
+          if [ -n "$NODE_AUTH_TOKEN" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NODE_AUTH_TOKEN"
+          fi
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
