@@ -13,8 +13,7 @@
     "url": "https://github.com/iamtashanto/veilkit/issues"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "keywords": [
     "skeleton",
