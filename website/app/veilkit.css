@@ -1,0 +1,509 @@
+/* === VEILKIT CORE STYLES === */
+:root {
+  --veil-base: #e5e7eb;
+  --veil-highlight: rgba(255, 255, 255, 0.7);
+  --veil-radius: 6px;
+  --veil-duration: 1.5s;
+  --veil-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --veil-direction: ltr;
+  --veil-border: none;
+  --veil-blur: none;
+  --veil-glow: none;
+  --veil-contrast: #374151;
+
+  --veil-auto-base: #e5e7eb;
+  --veil-auto-highlight: rgba(255, 255, 255, 0.7);
+  --veil-auto-contrast: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --veil-auto-base: #1f2937;
+    --veil-auto-highlight: rgba(255, 255, 255, 0.12);
+    --veil-auto-contrast: #f3f4f6;
+  }
+}
+
+/* === DARK THEME SELECTORS === */
+[data-theme="dark"], .dark, [data-theme="dark"] .veil-skeleton {
+  --veil-base: #1f2937;
+  --veil-highlight: rgba(255, 255, 255, 0.12);
+  --veil-contrast: #f3f4f6;
+}
+
+/* === THEME ATTRIBUTE CLASSES === */
+[data-veil-theme="light"]{--veil-base:#e5e7eb;--veil-highlight:rgba(255, 255, 255, 0.7);--veil-radius:6px;--veil-duration:1.5s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:none;--veil-contrast:#374151;}[data-veil-theme="dark"]{--veil-base:#1f2937;--veil-highlight:rgba(255, 255, 255, 0.12);--veil-radius:6px;--veil-duration:1.5s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:none;--veil-contrast:#f3f4f6;}[data-veil-theme="auto"]{--veil-base:var(--veil-auto-base, #e5e7eb);--veil-highlight:var(--veil-auto-highlight, rgba(255, 255, 255, 0.7));--veil-radius:6px;--veil-duration:1.5s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:none;--veil-contrast:var(--veil-auto-contrast, #374151);}[data-veil-theme="glass"]{--veil-base:rgba(255, 255, 255, 0.08);--veil-highlight:rgba(255, 255, 255, 0.25);--veil-radius:12px;--veil-duration:1.8s;--veil-easing:cubic-bezier(0.25, 1, 0.5, 1);--veil-border:1px solid rgba(255, 255, 255, 0.15);--veil-blur:12px;--veil-glow:inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), 0 4px 16px 0 rgba(0, 0, 0, 0.12);--veil-contrast:#ffffff;}[data-veil-theme="ios"]{--veil-base:rgba(120, 120, 128, 0.18);--veil-highlight:rgba(255, 255, 255, 0.45);--veil-radius:10px;--veil-duration:1.4s;--veil-easing:cubic-bezier(0.32, 0.72, 0, 1);--veil-border:none;--veil-contrast:#1c1c1e;}[data-veil-theme="material"]{--veil-base:#e7e0ec;--veil-highlight:#f7f2fa;--veil-radius:12px;--veil-duration:1.6s;--veil-easing:cubic-bezier(0.2, 0, 0, 1);--veil-border:none;--veil-contrast:#1d1b20;}[data-veil-theme="minimal"]{--veil-base:#f1f3f5;--veil-highlight:#ffffff;--veil-radius:4px;--veil-duration:1.4s;--veil-easing:ease-in-out;--veil-border:none;--veil-contrast:#212529;}[data-veil-theme="mono"]{--veil-base:#e0e0e0;--veil-highlight:#ffffff;--veil-radius:0px;--veil-duration:1.2s;--veil-easing:linear;--veil-border:1px solid #cccccc;--veil-contrast:#000000;}[data-veil-theme="neon"]{--veil-base:#0c0b16;--veil-highlight:rgba(0, 240, 255, 0.5);--veil-radius:8px;--veil-duration:1.6s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:1px solid rgba(0, 240, 255, 0.3);--veil-glow:0 0 12px rgba(0, 240, 255, 0.35);--veil-contrast:#00f0ff;}[data-veil-theme="sunset"]{--veil-base:#fed7aa;--veil-highlight:#fff7ed;--veil-radius:8px;--veil-duration:1.7s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:none;--veil-glow:0 0 8px rgba(251, 146, 60, 0.25);--veil-contrast:#7c2d12;}[data-veil-theme="ocean"]{--veil-base:#0f2937;--veil-highlight:rgba(56, 189, 248, 0.45);--veil-radius:8px;--veil-duration:1.7s;--veil-easing:cubic-bezier(0.4, 0, 0.2, 1);--veil-border:1px solid rgba(56, 189, 248, 0.2);--veil-glow:0 0 10px rgba(56, 189, 248, 0.25);--veil-contrast:#38bdf8;}
+
+/* === BASE SKELETON ELEMENT === */
+.veil-skeleton {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  background-color: var(--veil-base, #e5e7eb);
+  border-radius: var(--veil-radius, 6px);
+  border: var(--veil-border, none);
+  box-shadow: var(--veil-glow, none);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  min-height: 12px;
+}
+
+[data-veil-theme="glass"] .veil-skeleton,
+.veil-skeleton[data-veil-theme="glass"] {
+  backdrop-filter: blur(var(--veil-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--veil-blur, 12px));
+}
+
+/* === SHIMMER / ANIMATION OVERLAY === */
+.veil-skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--veil-highlight, rgba(255, 255, 255, 0.7)) 50%,
+    transparent 100%
+  );
+  animation-duration: var(--veil-duration, 1.5s);
+  animation-timing-function: var(--veil-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  animation-iteration-count: infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+  animation-play-state: var(--veil-play-state, running);
+}
+
+/* Animation name mapping */
+.veil-skeleton[data-veil-anim="shimmer"]::after,
+.veil-skeleton:not([data-veil-anim])::after {
+  animation-name: veil-shimmer-ltr;
+}
+.veil-skeleton[data-veil-dir="rtl"]::after,
+[dir="rtl"] .veil-skeleton[data-veil-anim="shimmer"]::after {
+  animation-name: veil-shimmer-rtl;
+}
+.veil-skeleton[data-veil-dir="ttb"]::after {
+  animation-name: veil-shimmer-ttb;
+  background: linear-gradient(180deg, transparent 0%, var(--veil-highlight, rgba(255,255,255,0.7)) 50%, transparent 100%);
+}
+.veil-skeleton[data-veil-dir="btt"]::after {
+  animation-name: veil-shimmer-btt;
+  background: linear-gradient(0deg, transparent 0%, var(--veil-highlight, rgba(255,255,255,0.7)) 50%, transparent 100%);
+}
+
+.veil-skeleton[data-veil-anim="wave"]::after {
+  animation-name: veil-wave;
+}
+
+.veil-skeleton[data-veil-anim="pulse"]::after {
+  background: none;
+}
+.veil-skeleton[data-veil-anim="pulse"] {
+  animation: veil-pulse var(--veil-duration, 1.5s) var(--veil-easing, ease-in-out) infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+  animation-play-state: var(--veil-play-state, running);
+}
+
+.veil-skeleton[data-veil-anim="blink"]::after {
+  background: none;
+}
+.veil-skeleton[data-veil-anim="blink"] {
+  animation: veil-blink var(--veil-duration, 1.2s) steps(2, start) infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+  animation-play-state: var(--veil-play-state, running);
+}
+
+.veil-skeleton[data-veil-anim="breathe"]::after {
+  background: none;
+}
+.veil-skeleton[data-veil-anim="breathe"] {
+  animation: veil-breathe var(--veil-duration, 2.2s) var(--veil-easing, ease-in-out) infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+  animation-play-state: var(--veil-play-state, running);
+}
+
+.veil-skeleton[data-veil-anim="glass-shine"]::after {
+  animation-name: veil-glass-shine;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    var(--veil-highlight, rgba(255, 255, 255, 0.4)) 50%,
+    transparent 80%
+  );
+}
+
+.veil-skeleton[data-veil-anim="gradient-flow"]::after {
+  width: 300%;
+  animation-name: veil-gradient-flow;
+  background: linear-gradient(
+    90deg,
+    var(--veil-base, #e5e7eb) 0%,
+    var(--veil-highlight, rgba(255, 255, 255, 0.8)) 30%,
+    var(--veil-base, #e5e7eb) 60%,
+    var(--veil-highlight, rgba(255, 255, 255, 0.8)) 100%
+  );
+}
+
+.veil-skeleton[data-veil-anim="aurora"]::after {
+  width: 160%;
+  height: 160%;
+  animation-name: veil-aurora;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(56, 189, 248, 0.3) 0%,
+    rgba(168, 85, 247, 0.25) 45%,
+    rgba(236, 72, 153, 0.2) 75%,
+    transparent 100%
+  );
+}
+
+.veil-skeleton[data-veil-anim="scan-line"]::after {
+  height: 30%;
+  animation-name: veil-scan-line;
+  background: linear-gradient(180deg, transparent, var(--veil-highlight, rgba(0, 240, 255, 0.8)), transparent);
+}
+
+.veil-skeleton[data-veil-anim="sparkle"]::after {
+  animation-name: veil-sparkle;
+}
+
+.veil-skeleton[data-veil-anim="neon-glow"] {
+  animation: veil-neon-glow var(--veil-duration, 1.6s) ease-in-out infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+}
+
+.veil-skeleton[data-veil-anim="ripple"]::after {
+  width: 100%;
+  height: 100%;
+  animation: veil-ripple var(--veil-duration, 1.8s) ease-out infinite;
+  background: radial-gradient(circle, var(--veil-highlight, rgba(255, 255, 255, 0.7)) 10%, transparent 70%);
+}
+
+.veil-skeleton[data-veil-anim="ping-pong"]::after {
+  animation-name: veil-ping-pong;
+  animation-duration: var(--veil-duration, 2.4s);
+  animation-timing-function: ease-in-out;
+}
+
+.veil-skeleton[data-veil-anim="wipe"]::after {
+  width: 100%;
+  animation-name: veil-wipe;
+  animation-duration: var(--veil-duration, 1.8s);
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.veil-skeleton[data-veil-anim="cascade"]::after {
+  width: 100%;
+  animation-name: veil-cascade;
+  animation-duration: var(--veil-duration, 1.6s);
+}
+
+.veil-skeleton[data-veil-anim="spotlight"]::after {
+  width: 140%;
+  height: 140%;
+  animation-name: veil-spotlight;
+  animation-duration: var(--veil-duration, 2.5s);
+  background: radial-gradient(circle at center, var(--veil-highlight, rgba(255, 255, 255, 0.85)) 0%, transparent 60%);
+}
+
+.veil-skeleton[data-veil-anim="rainbow"]::after {
+  width: 250%;
+  animation-name: veil-rainbow;
+  animation-duration: var(--veil-duration, 3.5s);
+  background: linear-gradient(90deg, #f43f5e, #fbbf24, #10b981, #06b6d4, #8b5cf6, #f43f5e);
+  opacity: 0.25;
+}
+
+.veil-skeleton[data-veil-anim="heartbeat"] {
+  animation: veil-heartbeat var(--veil-duration, 1.4s) ease-in-out infinite;
+  animation-delay: var(--veil-sync-delay, 0s);
+}
+.veil-skeleton[data-veil-anim="heartbeat"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="liquid"]::after {
+  width: 150%;
+  animation-name: veil-liquid;
+  animation-duration: var(--veil-duration, 2.2s);
+  background: radial-gradient(ellipse at center, var(--veil-highlight, rgba(255, 255, 255, 0.7)) 0%, transparent 70%);
+}
+
+.veil-skeleton[data-veil-anim="stripes"]::after {
+  width: 200%;
+  animation-name: veil-stripes;
+  animation-duration: var(--veil-duration, 1.5s);
+  animation-timing-function: linear;
+  background: repeating-linear-gradient(45deg, transparent, transparent 12px, var(--veil-highlight, rgba(255, 255, 255, 0.4)) 12px, var(--veil-highlight, rgba(255, 255, 255, 0.4)) 24px);
+}
+
+.veil-skeleton[data-veil-anim="halftone"] {
+  animation: veil-halftone var(--veil-duration, 1.8s) ease-in-out infinite;
+}
+.veil-skeleton[data-veil-anim="halftone"]::after {
+  background: radial-gradient(var(--veil-highlight, rgba(255, 255, 255, 0.5)) 15%, transparent 16%);
+  background-size: 8px 8px;
+}
+
+.veil-skeleton[data-veil-anim="border-glow"] {
+  animation: veil-border-glow var(--veil-duration, 1.6s) ease-in-out infinite;
+  box-shadow: 0 0 12px var(--veil-highlight, rgba(99, 102, 241, 0.5));
+}
+.veil-skeleton[data-veil-anim="border-glow"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="typewriter"] {
+  animation: veil-typewriter var(--veil-duration, 1.5s) steps(20, end) infinite alternate;
+}
+.veil-skeleton[data-veil-anim="typewriter"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="glitch"] {
+  animation: veil-glitch var(--veil-duration, 2s) steps(4, jump-none) infinite;
+}
+.veil-skeleton[data-veil-anim="glitch"]::after {
+  background: linear-gradient(90deg, transparent, var(--veil-highlight, rgba(255, 255, 255, 0.6)), transparent);
+}
+
+.veil-skeleton[data-veil-anim="pixelate"] {
+  animation: veil-pixelate var(--veil-duration, 1.4s) steps(5, start) infinite;
+}
+.veil-skeleton[data-veil-anim="pixelate"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="tilt"] {
+  animation: veil-tilt var(--veil-duration, 2.5s) ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+.veil-skeleton[data-veil-anim="tilt"]::after {
+  animation-name: veil-shimmer-ltr;
+}
+
+.veil-skeleton[data-veil-anim="diagonal-sweep"]::after {
+  width: 200%;
+  height: 200%;
+  animation-name: veil-diagonal-sweep;
+  animation-duration: var(--veil-duration, 2s);
+  background: linear-gradient(90deg, transparent 20%, var(--veil-highlight, rgba(255, 255, 255, 0.65)) 50%, transparent 80%);
+}
+
+.veil-skeleton[data-veil-anim="bounce-in"] {
+  animation: veil-bounce-in var(--veil-duration, 1.6s) cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+.veil-skeleton[data-veil-anim="bounce-in"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="fade-slide"] {
+  animation: veil-fade-slide var(--veil-duration, 1.6s) ease-in-out infinite;
+}
+.veil-skeleton[data-veil-anim="fade-slide"]::after {
+  background: none;
+}
+
+.veil-skeleton[data-veil-anim="none"]::after {
+  display: none !important;
+}
+
+/* === PRIMITIVE VARIANTS === */
+.veil-skeleton[data-veil-shape="line"] {
+  height: 1em;
+  margin: 0.35em 0;
+  border-radius: var(--veil-radius, 4px);
+}
+.veil-skeleton[data-veil-shape="circle"] {
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1;
+}
+.veil-skeleton[data-veil-shape="heading"] {
+  height: 1.8em;
+  margin: 0.5em 0;
+  border-radius: var(--veil-radius, 6px);
+}
+.veil-skeleton[data-veil-shape="button"] {
+  height: 2.5rem;
+  border-radius: var(--veil-radius, 8px);
+}
+.veil-skeleton[data-veil-shape="badge"] {
+  height: 1.35rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+.veil-skeleton[data-veil-shape="icon"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--veil-radius, 6px);
+  display: inline-block;
+}
+.veil-skeleton[data-veil-shape="input"] {
+  height: 2.6rem;
+  border-radius: var(--veil-radius, 8px);
+}
+.veil-skeleton[data-veil-shape="divider"] {
+  height: 1px;
+  width: 100%;
+  margin: 1rem 0;
+  min-height: 1px;
+}
+
+/* Natural randomized last-line widths */
+.veil-lines-group > .veil-skeleton:last-child {
+  width: var(--veil-last-width, 68%);
+}
+
+/* === ACCESSIBILITY === */
+.veil-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .veil-skeleton::after {
+    animation: none !important;
+    display: none !important;
+  }
+  .veil-skeleton {
+    animation: veil-pulse 3s ease-in-out infinite !important;
+    transform: none !important;
+  }
+}
+
+/* forced-colors */
+@media (forced-colors: active) {
+  .veil-skeleton {
+    forced-color-adjust: none;
+    background-color: ButtonFace !important;
+    outline: 1px solid Highlight !important;
+  }
+  .veil-skeleton::after {
+    display: none !important;
+  }
+}
+
+/* Offscreen & Tab Hidden Pausing */
+[data-veil-tab-hidden="true"] .veil-skeleton,
+[data-veil-tab-hidden="true"] .veil-skeleton::after,
+[data-veil-offscreen="true"],
+[data-veil-offscreen="true"]::after {
+  animation-play-state: paused !important;
+}
+
+/* === REVEAL TRANSITIONS === */
+.veil-revealing {
+  position: relative;
+}
+.veil-reveal-fade {
+  animation: veil-reveal-fade 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.veil-reveal-blur-in {
+  animation: veil-reveal-blur 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.veil-reveal-slide-up {
+  animation: veil-reveal-slide 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.veil-reveal-scale {
+  animation: veil-reveal-scale 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes veil-reveal-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes veil-reveal-blur {
+  0% { opacity: 0; filter: blur(8px); }
+  100% { opacity: 1; filter: blur(0px); }
+}
+@keyframes veil-reveal-slide {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes veil-reveal-scale {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* === SPINNERS, PROGRESS, OVERLAY, BUTTON, LAZY IMAGE === */
+.veil-spinner {
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.veil-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: var(--veil-overlay-bg, rgba(255, 255, 255, 0.75));
+  backdrop-filter: blur(var(--veil-overlay-blur, 6px));
+  -webkit-backdrop-filter: blur(var(--veil-overlay-blur, 6px));
+  z-index: 100;
+  transition: opacity 250ms ease;
+}
+.veil-overlay-fullscreen {
+  position: fixed !important;
+  z-index: 999999 !important;
+}
+.veil-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 999999;
+  background: transparent;
+  pointer-events: none;
+}
+.veil-progress-inner {
+  height: 100%;
+  background: var(--veil-progress-color, #3b82f6);
+  box-shadow: 0 0 10px var(--veil-progress-color, #3b82f6), 0 0 5px var(--veil-progress-color, #3b82f6);
+  transition: width 200ms ease, opacity 350ms ease;
+}
+.veil-btn-loading {
+  position: relative;
+  pointer-events: none;
+  cursor: default;
+}
+.veil-btn-spinner-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.veil-lazy-img-wrap {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.veil-lazy-img {
+  transition: opacity 350ms ease, filter 350ms ease;
+}
+.veil-lazy-img-loading {
+  opacity: 0;
+  filter: blur(10px);
+}
+.veil-lazy-img-loaded {
+  opacity: 1;
+  filter: blur(0px);
+}
+
+@keyframes veil-shimmer-ltr{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}@keyframes veil-shimmer-rtl{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}@keyframes veil-shimmer-ttb{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}@keyframes veil-shimmer-btt{0%{transform:translateY(100%)}100%{transform:translateY(-100%)}}@keyframes veil-wave{0%{transform:translateX(-120%) scaleX(0.8);opacity:0.3}50%{opacity:0.95}100%{transform:translateX(120%) scaleX(1.2);opacity:0.3}}@keyframes veil-pulse{0%,100%{opacity:1}50%{opacity:0.38}}@keyframes veil-blink{0%,49%{opacity:1}50%,99%{opacity:0.2}100%{opacity:1}}@keyframes veil-breathe{0%,100%{opacity:0.65;transform:scale(0.995)}50%{opacity:1;transform:scale(1.005)}}@keyframes veil-glass-shine{0%{transform:translate3d(-150%,-150%,0) rotate(35deg);opacity:0.1}40%,60%{opacity:0.85}100%{transform:translate3d(200%,200%,0) rotate(35deg);opacity:0.1}}@keyframes veil-gradient-flow{0%{transform:translateX(-66.6%)}100%{transform:translateX(0%)}}@keyframes veil-aurora{0%{transform:translate3d(-20%,-15%,0) rotate(0deg) scale(1);opacity:0.5}50%{transform:translate3d(25%,20%,0) rotate(180deg) scale(1.25);opacity:0.85}100%{transform:translate3d(-20%,-15%,0) rotate(360deg) scale(1);opacity:0.5}}@keyframes veil-scan-line{0%{transform:translateY(-100%);opacity:0.2}50%{opacity:1}100%{transform:translateY(300%);opacity:0.2}}@keyframes veil-sparkle{0%,100%{opacity:0.2;transform:scale(0.98)}25%{opacity:0.8;transform:scale(1.02)}50%{opacity:0.3;transform:scale(0.99)}75%{opacity:0.95;transform:scale(1.01)}}@keyframes veil-neon-glow{0%,100%{opacity:0.45;transform:scale(0.998)}50%{opacity:1;transform:scale(1.002)}}@keyframes veil-ripple{0%{transform:scale(0.2);opacity:0.9}100%{transform:scale(2.4);opacity:0}}@keyframes veil-ping-pong{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}@keyframes veil-wipe{0%{transform:translateX(-100%) scaleX(0.2);opacity:0.2}50%{transform:translateX(0%) scaleX(1);opacity:0.9}100%{transform:translateX(100%) scaleX(0.2);opacity:0.2}}@keyframes veil-cascade{0%{transform:translateY(-100%);opacity:0.3}50%{opacity:0.95}100%{transform:translateY(100%);opacity:0.3}}@keyframes veil-spotlight{0%{transform:translate3d(-100%,-50%,0);opacity:0.15}50%{transform:translate3d(50%,0%,0);opacity:0.85}100%{transform:translate3d(200%,50%,0);opacity:0.15}}@keyframes veil-rainbow{0%{filter:hue-rotate(0deg);transform:translateX(-50%)}100%{filter:hue-rotate(360deg);transform:translateX(0%)}}@keyframes veil-heartbeat{0%,100%{transform:scale(1);opacity:0.7}14%{transform:scale(1.025);opacity:1}28%{transform:scale(1);opacity:0.75}42%{transform:scale(1.035);opacity:1}70%{transform:scale(1);opacity:0.7}}@keyframes veil-liquid{0%,100%{transform:translateX(-100%) scaleY(0.9) skewX(-8deg);opacity:0.4}50%{transform:translateX(100%) scaleY(1.1) skewX(8deg);opacity:0.9}}@keyframes veil-stripes{0%{transform:translateX(-48px)}100%{transform:translateX(0px)}}@keyframes veil-halftone{0%,100%{opacity:0.35;transform:scale(0.995)}50%{opacity:0.95;transform:scale(1.005)}}@keyframes veil-border-glow{0%,100%{opacity:0.5;transform:scale(0.998)}50%{opacity:1;transform:scale(1.002)}}@keyframes veil-typewriter{0%{transform:scaleX(0.1);transform-origin:left;opacity:0.4}100%{transform:scaleX(1);transform-origin:left;opacity:1}}@keyframes veil-glitch{0%,100%{transform:translate(0);opacity:0.8}20%{transform:translate(-2px,1px);opacity:0.95}40%{transform:translate(2px,-1px);opacity:0.85}60%{transform:translate(-1px,-1px);opacity:1}80%{transform:translate(1px,2px);opacity:0.9}}@keyframes veil-pixelate{0%,100%{opacity:0.3;transform:scale(0.99)}25%{opacity:0.75;transform:scale(1)}50%{opacity:0.45;transform:scale(0.995)}75%{opacity:0.9;transform:scale(1.005)}}@keyframes veil-tilt{0%,100%{transform:perspective(600px) rotateX(0deg) rotateY(0deg);opacity:0.7}50%{transform:perspective(600px) rotateX(4deg) rotateY(-4deg);opacity:1}}@keyframes veil-diagonal-sweep{0%{transform:translate3d(-100%,-100%,0) rotate(-45deg)}100%{transform:translate3d(150%,150%,0) rotate(-45deg)}}@keyframes veil-bounce-in{0%,100%{transform:scale(0.985);opacity:0.6}50%{transform:scale(1.015);opacity:1}}@keyframes veil-fade-slide{0%,100%{transform:translateY(3px);opacity:0.5}50%{transform:translateY(-3px);opacity:1}}[data-veil-anim="stagger"]>*{animation-delay:calc(var(--veil-stagger-idx,0)*120ms)!important}

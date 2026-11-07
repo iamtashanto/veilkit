@@ -129,5 +129,32 @@ This document tracks all key technical, architectural, and design decisions made
   - Svelte adapter overhead: +0.45 kB (< 2.5 kB adapter budget).
   - Themes bundle brotli: 715 B (< 3 kB limit).
 
+---
+
+## 10. Custom Skeleton Layout Builder & Website Overhaul (v0.3.0)
+- **Custom Skeleton Builder Engine**:
+  - Implemented `SkeletonBuilder` fluent class allowing programmatic layout composition (`.card()`, `.row()`, `.col()`, `.avatar()`, `.heading()`, `.lines()`, `.button()`, `.rect()`, `.badge()`, `.toConfig()`, `.build()`, and `.toCode()`).
+  - Implemented `createCustomSkeleton(config)` declarative layout engine converting serializable JSON configurations into responsive, GPU-animated DOM elements.
+  - Implemented React `<CustomSkeleton config={...} />` component with SSR compatibility and automatic style injection.
+  - Zero dependencies maintained across the entire builder module.
+- **Preset Expansion to 45 Canonical Presets**:
+  - Added 5 high-demand layouts: `code-block`, `file-explorer`, `e-commerce-checkout`, `social-story`, and `hero-banner`.
+- **Production Documentation & Playground Website (`website/`)**:
+  - Framework: Next.js 16 with App Router, Tailwind CSS v4, and glassmorphic dark theme aesthetic.
+  - Build pipeline: `next build --webpack` for deterministic, sandboxed offline static generation with 0 Google Font network dependencies.
+  - SEO Architecture:
+    - Structured data: Schema.org `SoftwareApplication`, `TechArticle`, and `FAQPage` JSON-LD schemas.
+    - Sitemaps: `sitemap.xml` covering `/`, `/playground`, `/docs`, `/presets`, `/spinners`, `/comparison`, `/custom-builder`.
+    - Robots: `robots.txt` permissive for Googlebot, Bingbot, GPTBot, ClaudeBot, and PerplexityBot.
+    - AI Index: `llms.txt` following modern specification for AI developer tooling and crawlers.
+  - Dedicated Subpages:
+    - `/presets`: Visual catalog for all 45 presets with real-time shape switching and search filtering.
+    - `/spinners`: Interactive 30-spinner catalog with size, speed, color swatches, glass mode, and framework code generator.
+    - `/custom-builder`: Interactive visual layout builder allowing developers to pick components and generate React/Vue/Svelte/Angular/HTML code.
+    - `/comparison`: In-depth feature comparison matrix and benchmarks against `react-loading-skeleton`, `react-content-loader`, `nprogress`, `shadcn/ui`, and `mantine`.
+    - `/playground`: 4-tab interactive studio testing presets, spinners, stateful buttons, and the custom layout builder.
+    - `/docs`: Comprehensive guide for installation, styling, anti-flicker delay, custom themer, and API reference.
+
+
 
 

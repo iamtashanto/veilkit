@@ -63,3 +63,8 @@ export const SkeletonMapCard = (props: Omit<PresetProps, 'name'>) => <SkeletonPr
 export const SkeletonPricingCard = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="pricing-card" />;
 export const SkeletonTestimonial = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="testimonial" />;
 export const SkeletonFaqAccordion = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="faq-accordion" />;
+export const SkeletonFileExplorer = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="file-explorer" />;
+export const SkeletonCodeBlock = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="code-block" />;
+export const SkeletonCheckout = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="e-commerce-checkout" />;
+export const SkeletonSocialStory = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="social-story" />;
+export const SkeletonHeroBanner = (props: Omit<PresetProps, 'name'>) => <SkeletonPreset {...props} name="hero-banner" />;

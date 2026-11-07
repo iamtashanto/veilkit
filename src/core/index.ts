@@ -23,6 +23,7 @@ export * from './overlay';
 export * from './button';
 export * from './lazy-image';
 export * from './text-loader';
+export * from './custom-builder';
 export * from './controller';
 
 export { veil as default } from './controller';

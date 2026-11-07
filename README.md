@@ -14,7 +14,7 @@
 
 A production-grade, zero-dependency loading & skeleton UI toolkit built for the modern web and mobile ecosystem.
 Pure GPU-accelerated motion (`transform` & `opacity`), synchronized timeline clocks, anti-flicker timing,
-auto-measure DOM wrapping, 40 responsive presets, 30 spinners, 30 GPU animations, 16 loading button styles, 5 shape styles, route progress, and frosted glass themes.
+auto-measure DOM wrapping, 45 responsive presets, custom skeleton builder, 30 spinners, 30 GPU animations, 16 loading button styles, 5 shape styles, route progress, and frosted glass themes.
 
 [**Live Interactive Playground & Documentation → https://veilkit.tashanto.com**](https://veilkit.tashanto.com)
 
@@ -45,7 +45,8 @@ auto-measure DOM wrapping, 40 responsive presets, 30 spinners, 30 GPU animations
   - [React Native & Expo](#6-react-native--expo-veilkitnative)
   - [Electron Desktop](#7-electron-desktop)
   - [Vanilla JS & CDN](#8-vanilla-javascript--cdn)
-- [40 Ready-Made Presets (5 Shape Styles)](#-40-ready-made-presets)
+- [45 Ready-Made Presets (5 Shape Styles)](#-45-ready-made-presets)
+- [Custom Skeleton Layout Builder (Fluent API & JSON Engine)](#-custom-skeleton-layout-builder)
 - [30 GPU-Accelerated Animations](#-30-gpu-accelerated-animations)
 - [11 Built-in Themes & Custom Factory](#-11-built-in-themes--custom-theming)
 - [30 Spinner Loaders](#-30-spinner-loaders)
@@ -474,13 +475,15 @@ Drop-in UMD/IIFE bundle exporting the global `Veilkit`:
 
 ---
 
-## 🎨 40 Ready-Made Presets
+## 🎨 45 Ready-Made Presets
 
-Veilkit includes 40 canonical, responsive, customizable layout presets. Every preset supports responsive breakpoints and 5 shape styles (`rounded`, `pill`, `square`, `sharp`, `glass`).
+Veilkit includes 45 canonical, responsive, customizable layout presets. Every preset supports responsive breakpoints and 5 shape styles (`rounded`, `pill`, `square`, `sharp`, `glass`).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-presets.gif" alt="Veilkit 40 Presets Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
+  <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-presets.gif" alt="Veilkit 45 Presets Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
 </p>
+
+[**Browse all 45 Presets interactively in the Presets Gallery → https://veilkit.tashanto.com/presets**](https://veilkit.tashanto.com/presets)
 
 ### Shape Styles (`shape`)
 - `rounded`: Default modern rounded corners (`8px` radius).
@@ -495,12 +498,100 @@ Veilkit includes 40 canonical, responsive, customizable layout presets. Every pr
 
 | Category | Presets |
 | :--- | :--- |
-| **Cards & Content** | `card`, `product-card`, `product-grid`, `product-detail`, `feed-post`, `article`, `news-feed`, `media-card`, `map-card`, `pricing-card`, `testimonial` |
-| **User & Social** | `profile`, `profile-header`, `stories-row`, `reels`, `comment-thread`, `chat` |
+| **Cards & Content** | `card`, `product-card`, `product-grid`, `product-detail`, `e-commerce-checkout`, `feed-post`, `article`, `news-feed`, `media-card`, `map-card`, `pricing-card`, `testimonial`, `hero-banner` |
+| **User & Social** | `profile`, `profile-header`, `stories-row`, `reels`, `social-story`, `comment-thread`, `chat` |
 | **Dashboard & Data** | `dashboard`, `kpi-card`, `chart-bar`, `chart-line`, `chart-pie`, `kanban`, `timeline`, `calendar`, `table` |
 | **Lists & Feeds** | `list`, `list-item`, `inbox-list`, `notification-list`, `order-list`, `search-results` |
+| **Developer & Code** | `code-block`, `file-explorer` |
 | **Forms & Navigation**| `form`, `navbar`, `sidebar`, `tabs`, `settings-page`, `faq-accordion` |
 | **Media Players** | `video-player`, `music-player` |
+
+---
+
+## 🧩 Custom Skeleton Layout Builder
+
+Need a skeleton that matches your exact custom website layout? Veilkit provides a fluent builder API and declarative JSON engine, plus an interactive visual builder studio on our website.
+
+[**Try the Visual Custom Skeleton Studio → https://veilkit.tashanto.com/custom-builder**](https://veilkit.tashanto.com/custom-builder)
+
+### 1. Fluent Builder API (`SkeletonBuilder`)
+Build modular layouts using method chaining with full TypeScript auto-completion:
+
+```typescript
+import { SkeletonBuilder } from 'veilkit';
+
+// Construct custom skeleton tree
+const skeleton = new SkeletonBuilder({
+  animation: 'shimmer',
+  shape: 'rounded',
+  theme: 'dark'
+})
+  .card((card) => {
+    // Top row with user avatar & meta
+    card.row((row) => {
+      row.avatar(48);
+      row.col((col) => {
+        col.heading('65%');
+        col.lines(2);
+      });
+      row.badge(60, 24);
+    });
+
+    // Content media banner
+    card.rect('100%', 160);
+
+    // Bottom action row
+    card.row((row) => {
+      row.button(110, 36);
+      row.button(80, 36);
+    });
+  })
+  .build(); // Returns a ready-to-mount HTMLDivElement
+
+document.getElementById('my-app').appendChild(skeleton);
+```
+
+### 2. React `<CustomSkeleton />` Component
+Pass your custom tree structure directly to the React component:
+
+```tsx
+import { CustomSkeleton, SkeletonBuilder } from 'veilkit/react';
+
+const config = new SkeletonBuilder({ shape: 'glass', animation: 'aurora' })
+  .row((r) => {
+    r.avatar(52);
+    r.col((c) => {
+      c.heading('75%');
+      c.lines(3);
+    });
+  })
+  .toConfig();
+
+export function MyCustomLoader() {
+  return <CustomSkeleton config={config} />;
+}
+```
+
+### 3. Declarative JSON Schema (`createCustomSkeleton`)
+Or define layouts as clean, serializable JSON configs (ideal for sharing across micro-frontends):
+
+```typescript
+import { createCustomSkeleton } from 'veilkit';
+
+const element = createCustomSkeleton({
+  shape: 'rounded',
+  animation: 'wave',
+  root: {
+    type: 'card',
+    children: [
+      { type: 'avatar', size: 48 },
+      { type: 'heading', width: '80%', height: 24 },
+      { type: 'lines', count: 3 },
+      { type: 'button', width: 120, height: 38 }
+    ]
+  }
+});
+```
 
 ---
 
@@ -582,6 +673,8 @@ All 30 spinners are GPU-accelerated, scalable via `size` and `color`, and suppor
 <p align="center">
   <img src="https://raw.githubusercontent.com/iamtashanto/veilkit/main/assets/demo-spinners.gif" alt="Veilkit 30 Spinners Demo" width="800" style="max-width: 100%; border-radius: 10px;" />
 </p>
+
+[**Explore all 30 Spinners interactively in the Spinners Catalog → https://veilkit.tashanto.com/spinners**](https://veilkit.tashanto.com/spinners)
 
 `ring` • `dual-ring` • `dots` • `bars` • `pulse` • `orbit` • `wave` • `bounce` • `ios-activity` • `glass-orb` • `morph` • `progress-circle` • `arc-gradient` • `pulse-ring` • `dots-circle` • `grid-dots` • `square-flip` • `cube-fold` • `hourglass` • `infinity` • `heartbeat-line` • `equalizer` • `chasing-dots` • `typing` • `liquid-fill` • `atom` • `clock` • `radar` • `ellipsis` • `flower`
 

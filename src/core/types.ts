@@ -109,7 +109,10 @@ export type VeilPresetName =
   | 'testimonial'
   | 'faq-accordion'
   | 'file-explorer'
-  | 'code-block';
+  | 'code-block'
+  | 'e-commerce-checkout'
+  | 'social-story'
+  | 'hero-banner';
 
 export type VeilSpinnerType =
   | 'ring'
@@ -344,4 +347,42 @@ export interface TextLoaderProps {
   speed?: number;
   locale?: string;
   className?: string;
+}
+
+export type CustomSkeletonNodeType =
+  | 'row'
+  | 'col'
+  | 'card'
+  | 'avatar'
+  | 'heading'
+  | 'line'
+  | 'rect'
+  | 'image'
+  | 'button'
+  | 'badge'
+  | 'divider'
+  | 'custom';
+
+export interface CustomSkeletonNode {
+  type: CustomSkeletonNodeType;
+  width?: string | number;
+  height?: string | number;
+  radius?: string | number;
+  count?: number;
+  gap?: string | number;
+  align?: 'start' | 'center' | 'end' | 'between';
+  children?: CustomSkeletonNode[];
+  className?: string;
+  style?: Record<string, string | number>;
+}
+
+export interface CustomSkeletonConfig {
+  nodes: CustomSkeletonNode[];
+  animation?: VeilAnimationName;
+  theme?: VeilThemeName | CustomThemeInput;
+  direction?: VeilDirection;
+  shape?: VeilShapeStyle;
+  gap?: string | number;
+  className?: string;
+  style?: Record<string, string | number>;
 }

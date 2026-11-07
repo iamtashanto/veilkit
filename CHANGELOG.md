@@ -5,6 +5,29 @@ All notable changes to `veilkit` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-07
+
+### Added
+- **Custom Skeleton Layout Builder**:
+  - Fluent builder class `SkeletonBuilder` for programmatic skeleton tree construction: `.card()`, `.row()`, `.col()`, `.avatar()`, `.heading()`, `.lines()`, `.button()`, `.rect()`, `.badge()`, `.toConfig()`, `.build()`, and `.toCode()`.
+  - Declarative DOM engine `createCustomSkeleton(config)` converting JSON layout trees into responsive, GPU-animated DOM elements.
+  - React `<CustomSkeleton config={...} />` component with SSR compatibility.
+  - Visual Custom Skeleton Studio on official website (`https://veilkit.tashanto.com/custom-builder`).
+- **45 Canonical Presets** (expanded from 40):
+  - Added 5 new high-demand layout presets:
+    - `code-block`: Code editor frame with window controls, line numbers, and token lines.
+    - `file-explorer`: Hierarchical IDE file tree with folder icons and indented file items.
+    - `e-commerce-checkout`: Multi-step address/payment form with order total sidebar summary.
+    - `social-story`: Full-screen mobile story view with multi-segment top progress bars.
+    - `hero-banner`: Large centered marketing headline, subtitle, badge, and dual CTA buttons.
+- **Production Website & Documentation Overhaul (`website/`)**:
+  - Full Next.js 16 documentation and playground website (`https://veilkit.tashanto.com`).
+  - Comprehensive SEO architecture: OpenGraph cards, Twitter meta, XML sitemap (`/sitemap.xml`), robots exclusion (`/robots.txt`), and AI crawler index (`/llms.txt`).
+  - Schema.org JSON-LD structured data (`SoftwareApplication`, `TechArticle`, `FAQPage`) targeting Google search queries.
+  - Deep architectural feature matrix and benchmarks comparing Veilkit vs `react-loading-skeleton`, `react-content-loader`, `nprogress`, `shadcn/ui`, and `mantine`.
+  - Dedicated visual catalogs for 45+ Presets (`/presets`), 30 Spinners (`/spinners`), Custom Builder (`/custom-builder`), Comparison Matrix (`/comparison`), and Documentation Hub (`/docs`).
+  - Interactive multi-framework code switcher (React, Vue, Svelte, Angular, Web Components, Native, CDN).
+
 ## [0.2.0] - 2026-11-07
 
 ### Added

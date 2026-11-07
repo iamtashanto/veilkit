@@ -48,6 +48,11 @@ export const PRESET_NAMES: VeilPresetName[] = [
   'pricing-card',
   'testimonial',
   'faq-accordion',
+  'file-explorer',
+  'code-block',
+  'e-commerce-checkout',
+  'social-story',
+  'hero-banner',
 ];
 
 export function createPreset(props: PresetProps): HTMLElement {
@@ -1190,6 +1195,104 @@ export function createPreset(props: PresetProps): HTMLElement {
       for (const w of widths) {
         container.appendChild(createSkeletonElement({ ...baseProps, type: 'line', width: w, height: '12px' }));
       }
+      break;
+    }
+
+    case 'e-commerce-checkout': {
+      container.style.display = 'grid';
+      container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+      container.style.gap = '20px';
+
+      // Left column: Inputs (Shipping & Payment)
+      const leftCol = document.createElement('div');
+      leftCol.style.display = 'flex';
+      leftCol.style.flexDirection = 'column';
+      leftCol.style.gap = '12px';
+      leftCol.append(
+        createSkeletonElement({ ...baseProps, type: 'heading', width: '60%', height: '22px' }),
+        createSkeletonElement({ ...baseProps, type: 'input', width: '100%', height: '40px', radius: shapeRadius || '6px' }),
+        createSkeletonElement({ ...baseProps, type: 'input', width: '100%', height: '40px', radius: shapeRadius || '6px' }),
+        createSkeletonElement({ ...baseProps, type: 'input', width: '100%', height: '40px', radius: shapeRadius || '6px' })
+      );
+
+      // Right column: Order Summary Card
+      const rightCol = document.createElement('div');
+      rightCol.style.display = 'flex';
+      rightCol.style.flexDirection = 'column';
+      rightCol.style.gap = '12px';
+      rightCol.style.padding = '16px';
+      rightCol.style.borderRadius = shapeRadius || '8px';
+      rightCol.style.background = 'rgba(255,255,255,0.03)';
+      rightCol.append(
+        createSkeletonElement({ ...baseProps, type: 'heading', width: '50%', height: '20px' }),
+        createSkeletonElement({ ...baseProps, type: 'line', width: '100%', height: '14px' }),
+        createSkeletonElement({ ...baseProps, type: 'line', width: '80%', height: '14px' }),
+        createSkeletonElement({ ...baseProps, type: 'button', width: '100%', height: '44px', radius: shapeRadius || '8px' })
+      );
+
+      container.append(leftCol, rightCol);
+      break;
+    }
+
+    case 'social-story': {
+      container.style.display = 'flex';
+      container.style.flexDirection = 'column';
+      container.style.width = '240px';
+      container.style.height = '380px';
+      container.style.borderRadius = shapeRadius || '16px';
+      container.style.padding = '14px';
+      container.style.position = 'relative';
+      container.style.overflow = 'hidden';
+      container.style.background = 'rgba(255,255,255,0.05)';
+
+      // Top progress indicators
+      const progRow = document.createElement('div');
+      progRow.style.display = 'flex';
+      progRow.style.gap = '4px';
+      progRow.style.width = '100%';
+      for (let i = 0; i < 4; i++) {
+        const seg = createSkeletonElement({ ...baseProps, type: 'rect', width: '100%', height: '3px', radius: '2px' });
+        progRow.appendChild(seg);
+      }
+
+      // User header
+      const headerRow = document.createElement('div');
+      headerRow.style.display = 'flex';
+      headerRow.style.alignItems = 'center';
+      headerRow.style.gap = '8px';
+      headerRow.style.marginTop = '8px';
+      headerRow.append(
+        createSkeletonElement({ ...baseProps, type: 'circle', width: '32px', height: '32px' }),
+        createSkeletonElement({ ...baseProps, type: 'line', width: '80px', height: '12px' })
+      );
+
+      container.append(progRow, headerRow);
+      break;
+    }
+
+    case 'hero-banner': {
+      container.style.display = 'flex';
+      container.style.flexDirection = 'column';
+      container.style.alignItems = 'center';
+      container.style.textAlign = 'center';
+      container.style.gap = '14px';
+      container.style.padding = '40px 20px';
+
+      const badge = createSkeletonElement({ ...baseProps, type: 'badge', width: '110px', height: '24px', radius: '9999px' });
+      const h1 = createSkeletonElement({ ...baseProps, type: 'heading', width: '70%', height: '36px' });
+      const sub1 = createSkeletonElement({ ...baseProps, type: 'line', width: '50%', height: '16px' });
+      const sub2 = createSkeletonElement({ ...baseProps, type: 'line', width: '40%', height: '16px' });
+
+      const btnRow = document.createElement('div');
+      btnRow.style.display = 'flex';
+      btnRow.style.gap = '12px';
+      btnRow.style.marginTop = '10px';
+      btnRow.append(
+        createSkeletonElement({ ...baseProps, type: 'button', width: '140px', height: '44px', radius: shapeRadius || '8px' }),
+        createSkeletonElement({ ...baseProps, type: 'button', width: '120px', height: '44px', radius: shapeRadius || '8px' })
+      );
+
+      container.append(badge, h1, sub1, sub2, btnRow);
       break;
     }
   }

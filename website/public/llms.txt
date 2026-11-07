@@ -1,0 +1,84 @@
+# Veilkit — Complete Loading & Skeleton UI Toolkit
+
+> Every loading state, beautifully. One package, every framework. Zero runtime dependencies.
+> Website: https://veilkit.tashanto.com
+> GitHub: https://github.com/iamtashanto/veilkit
+> npm: https://www.npmjs.com/package/veilkit
+
+## Overview
+Veilkit is a production-grade, zero-dependency universal loading and skeleton UI toolkit for React, Next.js (App & Pages Router), Vue 3, Nuxt 3, Svelte 4/5, Angular 17-19, Web Components, React Native/Expo, and Vanilla HTML/CDN.
+
+### Key Capabilities
+- **Zero Runtime Dependencies**: Core has 0 dependencies. Frameworks are optional peer dependencies.
+- **Pure GPU Compositor Motion**: Strictly uses `transform` and `opacity` properties. Eliminates browser layout thrashing and ensures 60 FPS animation without battery drain.
+- **Synchronized Global Timeline**: All shimmers across the page share a synchronized clock phase using negative CSS animation-delay derived from `performance.now() % duration`. Zero phase jitter.
+- **Anti-Flicker Timing**: Built-in delay (default 150ms) prevents micro-flashes on fast API responses; minVisible (default 300ms) guarantees clean transitions.
+- **45+ Presets**: Ready-made responsive layouts for product cards, dashboards, feeds, articles, chat, checkouts, forms, music players, tables, and trees.
+- **5 Shape Styles**: rounded (8px), pill (9999px), square (4px), sharp (0px), glass (frosted blur 12px + border).
+- **30 GPU Animations**: shimmer, wave, pulse, blink, breathe, glass-shine, gradient-flow, aurora, scan-line, sparkle, neon-glow, stagger, ripple, ping-pong, wipe, cascade, spotlight, rainbow, heartbeat, liquid, stripes, halftone, border-glow, typewriter, glitch, pixelate, tilt, diagonal-sweep, bounce-in, fade-slide.
+- **30 Spinners**: CSS/SVG scalable spinners with glass variants and custom speed.
+- **16 Loading Button Styles**: Stateful machine (idle -> loading -> success | error -> idle), promise tracking, double-click protection, zero layout shift, animated checkmark/cross, ripple/scale press feedback, and native expo-haptics.
+- **Custom Skeleton Builder**: Fluent builder API (`new SkeletonBuilder()`) and declarative config (`createCustomSkeleton(config)`) to create custom skeletons matching any layout.
+- **DOM Auto-Measure Engine**: Wrap real UI with `<Veil loading>` or `v-veil="loading"` to automatically measure leaf elements and reveal content with fade/blur-in transitions.
+- **Top Route Progress**: NProgress-style route loader with auto-trickle and error fallbacks.
+
+## Framework Quickstarts
+
+### 1. React & Next.js
+```tsx
+import { Skeleton, SkeletonPreset, LoadingButton, Spinner } from 'veilkit/react';
+
+export default function MyComponent({ loading }) {
+  if (loading) {
+    return <SkeletonPreset name="product-card" shape="glass" animation="aurora" />;
+  }
+  return <LoadingButton onClick={async () => await saveData()}>Save</LoadingButton>;
+}
+```
+
+### 2. Vue 3 & Nuxt
+```vue
+<script setup>
+import { VSkeleton, VSkeletonPreset, VLoadingButton } from 'veilkit/vue';
+</script>
+
+<template>
+  <VSkeletonPreset name="dashboard" shape="rounded" animation="shimmer" />
+</template>
+```
+
+### 3. Svelte 5 / SvelteKit
+```svelte
+<script>
+  import { presetAction } from 'veilkit/svelte';
+</script>
+
+<div use:presetAction={{ name: 'chat', shape: 'pill' }} />
+```
+
+### 4. Custom Skeleton Builder
+```ts
+import { SkeletonBuilder } from 'veilkit';
+
+const skeleton = new SkeletonBuilder({ animation: 'shimmer', shape: 'rounded' })
+  .card((c) => {
+    c.row((r) => {
+      r.avatar(48);
+      r.col((col) => {
+        col.heading('60%');
+        col.lines(2);
+      });
+    });
+    c.rect('100%', 140);
+    c.button(120, 38);
+  })
+  .build();
+```
+
+## Installation
+```bash
+npm install veilkit
+pnpm add veilkit
+yarn add veilkit
+bun add veilkit
+```

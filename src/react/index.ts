@@ -14,3 +14,4 @@ export * from './ProgressBar';
 export * from './Overlay';
 export * from './LoadingButton';
 export * from './LazyImage';
+export * from './CustomSkeleton';
