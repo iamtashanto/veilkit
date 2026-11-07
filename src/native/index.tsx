@@ -35,6 +35,30 @@ try {
   }
 }
 
+// Safely probe for optional expo-haptics
+let Haptics: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  Haptics = require('expo-haptics');
+} catch {
+  Haptics = null;
+}
+
+function triggerHaptic(type: 'start' | 'success' | 'error') {
+  if (!Haptics) return;
+  try {
+    if (type === 'start') {
+      Haptics.impactAsync?.(Haptics.ImpactFeedbackStyle?.Light);
+    } else if (type === 'success') {
+      Haptics.notificationAsync?.(Haptics.NotificationFeedbackType?.Success);
+    } else if (type === 'error') {
+      Haptics.notificationAsync?.(Haptics.NotificationFeedbackType?.Error);
+    }
+  } catch {
+    // Silent fallback
+  }
+}
+
 export interface NativeSkeletonProps {
   width?: number | string;
   height?: number | string;
@@ -184,30 +208,101 @@ export function Overlay({
 }
 
 export function LoadingButton({
-  loading,
+  status: controlledStatus,
+  loading = false,
   title,
+  loadingText,
+  successText = 'Success',
+  errorText = 'Failed',
+  resetAfter = 2000,
+  haptics = true,
   onPress,
   style,
   textStyle,
 }: {
-  loading: boolean;
+  status?: 'idle' | 'loading' | 'success' | 'error';
+  loading?: boolean;
   title: string;
-  onPress?: () => void;
+  loadingText?: string;
+  successText?: string;
+  errorText?: string;
+  resetAfter?: number;
+  haptics?: boolean;
+  onPress?: () => Promise<any> | void;
   style?: ViewStyle;
   textStyle?: TextStyle;
 }) {
+  const [internalStatus, setInternalStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    controlledStatus || (loading ? 'loading' : 'idle'),
+  );
+
+  useEffect(() => {
+    if (controlledStatus) {
+      setInternalStatus(controlledStatus);
+    } else {
+      setInternalStatus(loading ? 'loading' : 'idle');
+    }
+  }, [controlledStatus, loading]);
+
+  const handlePress = async () => {
+    if (internalStatus !== 'idle') return;
+
+    if (haptics) triggerHaptic('start');
+
+    if (onPress) {
+      try {
+        const result = onPress();
+        if (result && typeof result.then === 'function') {
+          setInternalStatus('loading');
+          await result;
+          if (haptics) triggerHaptic('success');
+          setInternalStatus('success');
+          if (resetAfter > 0) {
+            setTimeout(() => setInternalStatus('idle'), resetAfter);
+          }
+        }
+      } catch {
+        if (haptics) triggerHaptic('error');
+        setInternalStatus('error');
+        if (resetAfter > 0) {
+          setTimeout(() => setInternalStatus('idle'), resetAfter);
+        }
+      }
+    }
+  };
+
+  const isBusy = internalStatus === 'loading';
+  const isDisabled = internalStatus !== 'idle';
+
+  let content: React.ReactNode = <Text style={[styles.btnText, textStyle]}>{title}</Text>;
+  if (internalStatus === 'loading') {
+    content = (
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Spinner size="small" color="#ffffff" />
+        {loadingText ? <Text style={[styles.btnText, textStyle]}>{loadingText}</Text> : null}
+      </View>
+    );
+  } else if (internalStatus === 'success') {
+    content = <Text style={[styles.btnText, textStyle]}>✓ {successText}</Text>;
+  } else if (internalStatus === 'error') {
+    content = <Text style={[styles.btnText, textStyle]}>✕ {errorText}</Text>;
+  }
+
+  const bgStyle =
+    internalStatus === 'success'
+      ? { backgroundColor: '#10b981' }
+      : internalStatus === 'error'
+      ? { backgroundColor: '#ef4444' }
+      : null;
+
   return (
     <TouchableOpacity
-      disabled={loading}
-      onPress={onPress}
-      accessibilityState={{ busy: loading, disabled: loading }}
-      style={[styles.btnBase, style]}
+      disabled={isDisabled}
+      onPress={handlePress}
+      accessibilityState={{ busy: isBusy, disabled: isDisabled }}
+      style={[styles.btnBase, bgStyle, style]}
     >
-      {loading ? (
-        <Spinner size="small" color="#ffffff" />
-      ) : (
-        <Text style={[styles.btnText, textStyle]}>{title}</Text>
-      )}
+      {content}
     </TouchableOpacity>
   );
 }

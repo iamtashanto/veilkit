@@ -102,4 +102,32 @@ This document tracks all key technical, architectural, and design decisions made
 - **Homepage & Docs**: `https://veilkit.tashanto.com`.
 - **Provenance**: Cryptographically signed build attestations published automatically to the npm registry with `--provenance` and `publishConfig.provenance: true`.
 
+---
+
+## 9. Catalog Expansion (v0.2.0 Add-On)
+- **30 GPU-Accelerated Skeleton Animations**:
+  - Expanded from 12 to 30 active animations (`shimmer`, `wave`, `pulse`, `blink`, `breathe`, `glass-shine`, `gradient-flow`, `aurora`, `scan-line`, `sparkle`, `neon-glow`, `stagger`, `ripple`, `ping-pong`, `wipe`, `cascade`, `spotlight`, `rainbow`, `heartbeat`, `liquid`, `stripes`, `halftone`, `border-glow`, `typewriter`, `glitch`, `pixelate`, `tilt`, `diagonal-sweep`, `bounce-in`, `fade-slide`).
+  - Keyframes generate pure `transform` and `opacity` properties to ensure 60 FPS GPU-thread execution with zero layout thrashing.
+  - Zero dropped or replaced animations; all existing animations remain identical.
+- **30 Spinner Loaders**:
+  - Expanded from 12 to 30 spinners (`ring`, `dual-ring`, `dots`, `bars`, `pulse`, `orbit`, `wave`, `bounce`, `ios-activity`, `glass-orb`, `morph`, `progress-circle`, `arc-gradient`, `pulse-ring`, `dots-circle`, `grid-dots`, `square-flip`, `cube-fold`, `hourglass`, `infinity`, `heartbeat-line`, `equalizer`, `chasing-dots`, `typing`, `liquid-fill`, `atom`, `clock`, `radar`, `ellipsis`, `flower`).
+  - Added support for `glass` frosted blur backdrop variant and custom `speed` multiplier to every spinner.
+- **40 Canonical Ready-Made Presets**:
+  - Expanded from 18 to 40 presets with comprehensive domain coverage (Cards & Content, User & Social, Dashboard & Analytics, Lists & Feeds, Forms & Navigation, Media Players).
+  - Added support for 5 shape styles across all 40 presets: `rounded` (8px), `pill` (9999px), `square` (4px), `sharp` (0px), and `glass` (frosted blur and border).
+- **Loading Button Full Catalog & State Machine**:
+  - Deterministic state machine: `idle → loading → success | error → idle` with automatic async promise tracking, double-click suppression while non-idle, and auto-reset timer (`resetAfter`).
+  - 16 distinct loading animation styles (`spinner-left`, `spinner-right`, `spinner-replace`, `dots-after-text`, `progress-fill`, `shimmer-surface`, `pulse-glow`, `stripes-progress`, `morph-circle`, `slide-text`, `border-trace`, `liquid-fill`, `bounce-dots`, `glass-shine`, `neon-pulse`, `skeleton-button`).
+  - Result animations: animated SVG `checkmark` draw, `cross` draw, error `shake`, and `success-burst`.
+  - Press feedback: `ripple`, `press-scale`, `glow-follow`.
+  - React Native / Expo: automatic haptic feedback via `expo-haptics` with silent fallback when absent.
+- **Multi-Framework Parity**:
+  - React, Vue, Svelte, Angular, Web Components, and React Native maintain 100% feature and API parity for all 40 presets, 30 animations, 30 spinners, and 16 button loading styles.
+- **Bundle Budgets**:
+  - Core ESM brotli: 17.71 kB (< 20 kB limit).
+  - React adapter overhead: +0.68 kB (< 2.5 kB adapter budget).
+  - Svelte adapter overhead: +0.45 kB (< 2.5 kB adapter budget).
+  - Themes bundle brotli: 715 B (< 3 kB limit).
+
+
 

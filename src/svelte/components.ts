@@ -2,11 +2,13 @@
  * Veilkit - Svelte Runes & Element Helpers
  */
 
-import { SkeletonProps, SpinnerProps, ProgressProps, OverlayProps } from '../core/types';
+import { SkeletonProps, SpinnerProps, ProgressProps, OverlayProps, PresetProps, LoadingButtonProps } from '../core/types';
 import { createSkeletonElement, createSkeletonParagraph } from '../core/primitives';
+import { createPreset } from '../core/presets';
 import { createSpinner } from '../core/spinners';
 import { createProgressElement } from '../core/progress';
 import { overlayController } from '../core/overlay';
+import { wrapLoadingButton } from '../core/button';
 
 export function skeletonAction(node: HTMLElement, props: SkeletonProps = {}) {
   const el = props.lines || (props.count && props.count > 1)
@@ -54,6 +56,32 @@ export function overlayAction(node: HTMLElement, props: OverlayProps = {}) {
     },
     destroy() {
       overlayController.hide(node);
+    },
+  };
+}
+
+export function presetAction(node: HTMLElement, props: PresetProps) {
+  const el = createPreset(props);
+  node.appendChild(el);
+  return {
+    destroy() {
+      el.remove();
+    },
+  };
+}
+
+export function loadingButtonAction(node: HTMLButtonElement, props: LoadingButtonProps = {}) {
+  const controller = wrapLoadingButton(node, props);
+  return {
+    update(newProps: LoadingButtonProps) {
+      if (newProps.status) {
+        controller.setStatus(newProps.status, newProps.loadingText);
+      } else {
+        controller.setLoading(Boolean(newProps.loading), newProps.loadingText);
+      }
+    },
+    destroy() {
+      controller.destroy();
     },
   };
 }

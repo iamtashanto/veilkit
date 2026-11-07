@@ -14,7 +14,7 @@
 
 A production-grade, zero-dependency loading & skeleton UI toolkit built for the modern web and mobile ecosystem.
 Pure GPU-accelerated motion (`transform` & `opacity`), synchronized timeline clocks, anti-flicker timing,
-auto-measure DOM wrapping, 18 responsive presets, 12 spinners, route progress, and frosted glass themes.
+auto-measure DOM wrapping, 40 responsive presets, 30 spinners, 30 GPU animations, 16 loading button styles, 5 shape styles, route progress, and frosted glass themes.
 
 [**Live Interactive Playground & Documentation → https://veilkit.tashanto.com**](https://veilkit.tashanto.com)
 
@@ -37,10 +37,11 @@ auto-measure DOM wrapping, 18 responsive presets, 12 spinners, route progress, a
   - [React Native & Expo](#6-react-native--expo-veilkitnative)
   - [Electron Desktop](#7-electron-desktop)
   - [Vanilla JS & CDN](#8-vanilla-javascript--cdn)
-- [18 Layout Presets](#-18-ready-made-presets)
-- [12 GPU-Accelerated Animations](#-12-gpu-accelerated-animations)
+- [40 Ready-Made Presets (5 Shape Styles)](#-40-ready-made-presets)
+- [30 GPU-Accelerated Animations](#-30-gpu-accelerated-animations)
 - [11 Built-in Themes & Custom Factory](#-11-built-in-themes--custom-theming)
-- [12 Spinners Gallery](#-12-spinner-loaders)
+- [30 Spinner Loaders](#-30-spinner-loaders)
+- [Loading Button & State Machine (16 Styles)](#-loading-button--state-machine)
 - [Auto-Measure & Reveal Engine](#-auto-measure--reveal-engine)
 - [Anti-Flicker Timing Controller](#-anti-flicker-timing-controller)
 - [Global Loading Manager & Tracker](#-global-loading-manager--request-tracking)
@@ -78,10 +79,11 @@ Most skeleton libraries suffer from several critical shortcomings:
 - **Zero Runtime Dependencies**: The core package has 0 dependencies. All framework libraries are declared as optional peer dependencies.
 - **Synchronized Global Timeline**: All shimmers across the page share a synced clock phase via negative CSS `animation-delay` offsets calculated from `performance.now() % duration`.
 - **Zero Layout Thrashing**: Animations strictly use `transform` and `opacity` on the GPU compositor thread. Offscreen elements and hidden background tabs automatically pause execution via `IntersectionObserver` and `visibilitychange`.
-- **12 Animations**: `shimmer`, `wave`, `pulse`, `blink`, `breathe`, `glass-shine`, `gradient-flow`, `aurora`, `scan-line`, `sparkle`, `neon-glow`, and `stagger`.
+- **30 GPU Animations**: `shimmer`, `wave`, `pulse`, `blink`, `breathe`, `glass-shine`, `gradient-flow`, `aurora`, `scan-line`, `sparkle`, `neon-glow`, `stagger`, `ripple`, `ping-pong`, `wipe`, `cascade`, `spotlight`, `rainbow`, `heartbeat`, `liquid`, `stripes`, `halftone`, `border-glow`, `typewriter`, `glitch`, `pixelate`, `tilt`, `diagonal-sweep`, `bounce-in`, `fade-slide`.
 - **11 Themes**: `light`, `dark`, `auto`, `glass`, `ios`, `material`, `minimal`, `mono`, `neon`, `sunset`, `ocean`, plus `createTheme()` for brand palettes.
-- **18 Responsive Presets**: Ready-made layouts for cards, feeds, dashboards, profiles, tables, articles, chat, forms, and navigation bars.
-- **12 Spinners**: High-performance SVG and CSS spinners with customizable colors and sizes.
+- **40 Canonical Presets**: Ready-made layouts with 5 shape styles (`rounded`, `pill`, `square`, `sharp`, `glass`).
+- **30 Spinner Loaders**: Ultra-smooth CSS/SVG spinners with customizable size, color, speed, and glass variants.
+- **Loading Button Machine**: 16 loading styles, auto-managed promise state machine (`idle → loading → success | error → idle`), result animations (`checkmark`, `cross`, `shake`, `success-burst`), press ripple/scale feedback, and native haptics.
 - **Auto-Measure Engine**: Wrap real markup with `<Veil loading>` or `v-veil="loading"` to measure layout leaf elements with zero hydration mismatches.
 - **Top Route Progress**: NProgress-style route loader with auto-trickle and error fallbacks.
 
@@ -464,49 +466,68 @@ Drop-in UMD/IIFE bundle exporting the global `Veilkit`:
 
 ---
 
-## 🎨 18 Ready-Made Presets
+## 🎨 40 Ready-Made Presets
 
-Ready-to-use, responsive, customizable layout presets:
+Veilkit includes 40 canonical, responsive, customizable layout presets. Every preset supports responsive breakpoints and 5 shape styles (`rounded`, `pill`, `square`, `sharp`, `glass`).
 
-| Preset Name | Description | Common Use Cases |
-| :--- | :--- | :--- |
-| `card` | Hero media, title heading, 2 paragraph lines, and action button | Content cards, blog summaries |
-| `product-card` | Product thumbnail, category badge, title, price line, buy button | E-commerce storefronts |
-| `product-grid` | Responsive multi-column grid of product cards | Catalog browse pages |
-| `feed-post` | Avatar, user handle, post content, media embed, 3 reaction icons | Social feeds, activity streams |
-| `article` | Wide hero banner, large headline, byline, rich text blocks | News, blogs, documentation |
-| `profile` | Centered avatar, user name, bio text lines, follow button | User overview, author cards |
-| `profile-header`| Cover image banner, overlapping circle avatar, handle, bio | Social profile headers |
-| `dashboard` | 4 metric counter cards and 2 responsive chart placeholders | Analytics, admin dashboards |
-| `form` | Form title, 3 labeled input fields, and submit button | Login, registration, checkout |
-| `table` | Header row with bold columns, followed by N table body rows | Data tables, inventory, billing |
-| `list` | Container of multiple avatar list items with dividers | Settings lists, notifications |
-| `list-item` | Circle avatar, primary title, subtitle, and trailing action icon | Contact list, message list |
-| `comment-thread`| Nested comment tree with author avatars and reply indentations | Discussion forums, reviews |
-| `chat` | Alternating left and right message bubbles with user avatars | Messaging apps, support chat |
-| `media-card` | Video/audio thumbnail with play button overlay, channel meta | Video streaming, podcast cards |
-| `navbar` | Brand logo block, horizontal link tabs, search input, avatar | Top navigation bars |
-| `sidebar` | Logo, vertical menu items with icons, profile footer | Admin sidebars, desktop apps |
-| `settings-page` | Section headers, toggle/input rows with descriptions, action | User account preferences |
+### Shape Styles (`shape`)
+- `rounded`: Default modern rounded corners (`8px` radius).
+- `pill`: Fully rounded capsule corners (`9999px` radius).
+- `square`: Subtle soft-square corners (`4px` radius).
+- `sharp`: Geometric 0px razor-sharp borders (`0px` radius).
+- `glass`: Translucent glassmorphic skeleton with `backdrop-filter: blur(12px)` and subtle frosted borders.
+
+```tsx
+<SkeletonPreset name="product-card" shape="glass" animation="aurora" />
+```
+
+| Category | Presets |
+| :--- | :--- |
+| **Cards & Content** | `card`, `product-card`, `product-grid`, `product-detail`, `feed-post`, `article`, `news-feed`, `media-card`, `map-card`, `pricing-card`, `testimonial` |
+| **User & Social** | `profile`, `profile-header`, `stories-row`, `reels`, `comment-thread`, `chat` |
+| **Dashboard & Data** | `dashboard`, `kpi-card`, `chart-bar`, `chart-line`, `chart-pie`, `kanban`, `timeline`, `calendar`, `table` |
+| **Lists & Feeds** | `list`, `list-item`, `inbox-list`, `notification-list`, `order-list`, `search-results` |
+| **Forms & Navigation**| `form`, `navbar`, `sidebar`, `tabs`, `settings-page`, `faq-accordion` |
+| **Media Players** | `video-player`, `music-player` |
 
 ---
 
-## ✨ 12 GPU-Accelerated Animations
+## ✨ 30 GPU-Accelerated Animations
 
 All animations strictly use `transform` and `opacity` to eliminate layout thrashing:
 
-1. `shimmer`: Classic smooth linear gradient sweep.
-2. `wave`: Curved sinusoidal sweep overlay.
-3. `pulse`: Calm opacity breathing cycle (`0.4` ↔ `1.0`).
-4. `blink`: Crisp, rhythmic stepped pulse.
-5. `breathe`: Subtly slow opacity + micro-scale (`0.995` ↔ `1.005`).
-6. `glass-shine`: Angled diagonal sheen glint.
-7. `gradient-flow`: Continuous multi-stop hue transition across element width.
-8. `aurora`: Organic multi-chroma soft orbital drift.
-9. `scan-line`: High-tech precision laser line sweep.
-10. `sparkle`: Shifting micro-glint highlights.
-11. `neon-glow`: Luminous edge glow pulsing.
-12. `stagger`: Applies progressive animation delays to child elements in sequence.
+| Animation | Description |
+| :--- | :--- |
+| `shimmer` | Classic smooth linear gradient sweep |
+| `wave` | Curved sinusoidal sweep overlay |
+| `pulse` | Calm opacity breathing cycle (`0.4` ↔ `1.0`) |
+| `blink` | Crisp, rhythmic stepped pulse |
+| `breathe` | Subtly slow opacity + micro-scale (`0.995` ↔ `1.005`) |
+| `glass-shine` | Angled diagonal sheen glint across frosted surface |
+| `gradient-flow` | Continuous multi-stop hue transition across element width |
+| `aurora` | Organic multi-chroma soft orbital drift |
+| `scan-line` | High-tech precision laser line sweep |
+| `sparkle` | Shifting micro-glint highlights |
+| `neon-glow` | Luminous edge glow pulsing |
+| `stagger` | Applies progressive animation delays to child elements in sequence |
+| `ripple` | Radial circular pulse emanating outward from element center |
+| `ping-pong` | Smooth sweeping highlight that reverses direction at edges |
+| `wipe` | Sleek bar that slides across element revealing geometry |
+| `cascade` | Top-to-bottom delayed wave across blocks |
+| `spotlight` | Focused soft light cone traversing the container |
+| `rainbow` | Chromatic multi-hue sweep transition |
+| `heartbeat` | Rhythmic double-beat opacity pulse |
+| `liquid` | Soft fluid morphing highlight sweep |
+| `stripes` | Animated barber-pole diagonal stripe pattern |
+| `halftone` | Stylized dot-matrix luminous pulse |
+| `border-glow` | Luminous perimeter neon border trace |
+| `typewriter` | Text placeholders that dynamically grow in width |
+| `glitch` | Micro high-tech digital displacement flicker |
+| `pixelate` | Retro 8-bit block pixel flicker matrix |
+| `tilt` | Subtle 3D perspective tilt motion |
+| `diagonal-sweep`| 45-degree corner-to-corner highlight sweep |
+| `bounce-in` | Elastic micro-spring scale reveal |
+| `fade-slide` | Subtle upward floating drift |
 
 ---
 
@@ -542,16 +563,62 @@ createTheme({
 
 ---
 
-## 🔄 12 Spinner Loaders
+## 🔄 30 Spinner Loaders
 
-All spinners are GPU-accelerated and fully scalable via `size` and `color`:
+All 30 spinners are GPU-accelerated, scalable via `size` and `color`, and support `glass` frosted blur variants and custom `speed`:
 
-`ring` • `dual-ring` • `dots` • `bars` • `pulse` • `orbit` • `wave` • `bounce` • `ios-activity` • `glass-orb` • `morph` • `progress-circle`
+`ring` • `dual-ring` • `dots` • `bars` • `pulse` • `orbit` • `wave` • `bounce` • `ios-activity` • `glass-orb` • `morph` • `progress-circle` • `arc-gradient` • `pulse-ring` • `dots-circle` • `grid-dots` • `square-flip` • `cube-fold` • `hourglass` • `infinity` • `heartbeat-line` • `equalizer` • `chasing-dots` • `typing` • `liquid-fill` • `atom` • `clock` • `radar` • `ellipsis` • `flower`
 
 ```tsx
-<Spinner type="ios-activity" size={32} color="#38bdf8" />
-<Spinner type="glass-orb" size={36} />
-<Spinner type="morph" size={28} />
+<Spinner type="arc-gradient" size={32} color="#38bdf8" speed={0.8} />
+<Spinner type="atom" size={36} glass />
+<Spinner type="infinity" size={28} color="#a855f7" />
+```
+
+---
+
+## 🔘 Loading Button & State Machine
+
+Veilkit includes a comprehensive loading button with state machine transitions, 16 loading styles, result animations, press feedback, and native haptics:
+
+- **State Machine**: `idle → loading → success | error → idle`. Automatically handles async promises or explicit `status` prop (`idle`, `loading`, `success`, `error`).
+- **Auto-Reset**: Configurable `resetAfter` (default: 2000ms) resets success/error state back to idle.
+- **Double-Click Protection**: Clicks are safely ignored while non-idle.
+- **Result Animations**: Animated SVG `checkmark` draw, `cross` draw, error `shake`, and celebratory `success-burst`.
+- **Press Feedback**: `ripple` (material ink ripple), `press-scale` (tactile spring down), or `glow-follow` (magnetic mouse highlight).
+- **Native Haptics**: On React Native/Expo, automatically triggers light haptic on start, notification success on completion, and notification error on failure (via `expo-haptics`).
+
+### 16 Loading Styles:
+1. `spinner-left`: Spinner docked at the start of text
+2. `spinner-right`: Spinner docked at the end of text
+3. `spinner-replace`: Button text smoothly fades out, replaced by centered spinner
+4. `dots-after-text`: Animated trailing ellipsis dots (`Saving...`)
+5. `progress-fill`: Button background fills horizontally as determinate or indeterminate progress
+6. `shimmer-surface`: Subtle GPU light sheen swept across button surface
+7. `pulse-glow`: Luminous breathing glow around button border
+8. `stripes-progress`: Animated diagonal barber-pole progress stripes
+9. `morph-circle`: Button contracts into a compact circle spinner, then expands back to pill
+10. `slide-text`: Active text slides upward as loading status slides into view
+11. `border-trace`: Laser beam traced continuously along the button's perimeter
+12. `liquid-fill`: Fluid wave that rises and fills the button interior
+13. `bounce-dots`: Three rhythmic bouncing micro-dots
+14. `glass-shine`: Glint reflecting across frosted glassmorphic button
+15. `neon-pulse`: Electric neon aura pulsing around the button
+16. `skeleton-button`: Button transforms seamlessly into a matching skeleton placeholder
+
+```tsx
+<LoadingButton
+  loadingStyle="morph-circle"
+  pressFeedback="ripple"
+  loadingText="Deploying..."
+  successText="Live!"
+  errorText="Failed"
+  onClick={async () => {
+    await deployProject();
+  }}
+>
+  Deploy to Production
+</LoadingButton>
 ```
 
 ---

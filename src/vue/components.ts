@@ -4,9 +4,16 @@ import {
   VeilAnimationName,
   VeilPrimitiveType,
   VeilSpinnerType,
+  VeilPresetName,
+  VeilShapeStyle,
+  ButtonStatus,
+  ButtonLoadingStyle,
+  ButtonPressFeedback,
+  ButtonResultAnimation,
 } from '../core/types';
 import { injectStyles } from '../core/css';
 import { createSpinner } from '../core/spinners';
+import { createPreset } from '../core/presets';
 import { createProgressElement } from '../core/progress';
 import { overlayController } from '../core/overlay';
 import { createAutoMeasureOverlay } from '../core/measure';
@@ -26,6 +33,7 @@ export const VSkeleton = defineComponent({
     lastLineWidth: { type: [String, Number], default: '65%' },
     animation: { type: String as PropType<VeilAnimationName>, default: 'shimmer' },
     theme: { type: String as PropType<VeilThemeName>, default: 'light' },
+    shape: { type: String as PropType<VeilShapeStyle> },
     circle: { type: Boolean, default: false },
     label: { type: String, default: 'Loading' },
   },
@@ -92,6 +100,38 @@ export const VSkeleton = defineComponent({
   },
 });
 
+export const VSkeletonPreset = defineComponent({
+  name: 'VSkeletonPreset',
+  props: {
+    name: { type: String as PropType<VeilPresetName>, required: true },
+    items: { type: Number },
+    columns: { type: Number },
+    shape: { type: String as PropType<VeilShapeStyle>, default: 'rounded' },
+    animation: { type: String as PropType<VeilAnimationName>, default: 'shimmer' },
+    theme: { type: String as PropType<VeilThemeName>, default: 'light' },
+    width: { type: [String, Number] },
+  },
+  setup(props) {
+    const root = ref<HTMLElement | null>(null);
+
+    onMounted(() => {
+      if (!root.value) return;
+      const el = createPreset({
+        name: props.name,
+        items: props.items,
+        columns: props.columns,
+        shape: props.shape,
+        animation: props.animation,
+        theme: props.theme,
+        width: props.width,
+      });
+      root.value.replaceWith(el);
+    });
+
+    return () => h('div', { ref: root, class: 'veil-preset-vue' });
+  },
+});
+
 export const VVeil = defineComponent({
   name: 'VVeil',
   props: {
@@ -136,6 +176,9 @@ export const VSpinner = defineComponent({
     type: { type: String as PropType<VeilSpinnerType>, default: 'ring' },
     size: { type: [String, Number], default: 28 },
     color: { type: String },
+    secondaryColor: { type: String },
+    speed: { type: [String, Number] },
+    glass: { type: Boolean, default: false },
     label: { type: String, default: 'Loading' },
   },
   setup(props) {
@@ -147,6 +190,9 @@ export const VSpinner = defineComponent({
         type: props.type,
         size: props.size,
         color: props.color,
+        secondaryColor: props.secondaryColor,
+        speed: props.speed,
+        glass: props.glass,
         label: props.label,
       });
       root.value.appendChild(el);
@@ -215,9 +261,17 @@ export const VOverlay = defineComponent({
 export const VLoadingButton = defineComponent({
   name: 'VLoadingButton',
   props: {
+    status: { type: String as PropType<ButtonStatus> },
     loading: { type: Boolean, default: false },
+    styleType: { type: String as PropType<ButtonLoadingStyle>, default: 'spinner-left' },
     spinner: { type: String as PropType<VeilSpinnerType>, default: 'ring' },
     loadingText: { type: String },
+    successText: { type: String },
+    errorText: { type: String },
+    resetAfter: { type: Number, default: 2000 },
+    progress: { type: Number },
+    pressFeedback: { type: String as PropType<ButtonPressFeedback>, default: 'press-scale' },
+    resultAnimation: { type: String as PropType<ButtonResultAnimation>, default: 'checkmark' },
   },
   setup(props, { slots }) {
     const btnRef = ref<HTMLButtonElement | null>(null);
@@ -226,16 +280,29 @@ export const VLoadingButton = defineComponent({
     onMounted(() => {
       if (!btnRef.value) return;
       controller = wrapLoadingButton(btnRef.value, {
+        status: props.status,
         loading: props.loading,
+        styleType: props.styleType,
         spinner: props.spinner,
         loadingText: props.loadingText,
+        successText: props.successText,
+        errorText: props.errorText,
+        resetAfter: props.resetAfter,
+        progress: props.progress,
+        pressFeedback: props.pressFeedback,
+        resultAnimation: props.resultAnimation,
       });
     });
 
     watch(
-      () => props.loading,
-      (loading) => {
-        if (controller) controller.setLoading(loading, props.loadingText);
+      () => [props.status, props.loading],
+      () => {
+        if (!controller) return;
+        if (props.status) {
+          controller.setStatus(props.status);
+        } else {
+          controller.setLoading(props.loading, props.loadingText);
+        }
       },
     );
 

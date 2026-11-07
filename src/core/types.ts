@@ -29,6 +29,24 @@ export type VeilAnimationName =
   | 'sparkle'
   | 'neon-glow'
   | 'stagger'
+  | 'ripple'
+  | 'ping-pong'
+  | 'wipe'
+  | 'cascade'
+  | 'spotlight'
+  | 'rainbow'
+  | 'heartbeat'
+  | 'liquid'
+  | 'stripes'
+  | 'halftone'
+  | 'border-glow'
+  | 'typewriter'
+  | 'glitch'
+  | 'pixelate'
+  | 'tilt'
+  | 'diagonal-sweep'
+  | 'bounce-in'
+  | 'fade-slide'
   | 'none';
 
 export type VeilDirection = 'ltr' | 'rtl' | 'ttb' | 'btt';
@@ -46,6 +64,8 @@ export type VeilPrimitiveType =
   | 'input'
   | 'table-row'
   | 'divider';
+
+export type VeilShapeStyle = 'rounded' | 'pill' | 'square' | 'sharp' | 'glass';
 
 export type VeilPresetName =
   | 'card'
@@ -65,7 +85,31 @@ export type VeilPresetName =
   | 'media-card'
   | 'navbar'
   | 'sidebar'
-  | 'settings-page';
+  | 'settings-page'
+  | 'product-detail'
+  | 'news-feed'
+  | 'inbox-list'
+  | 'notification-list'
+  | 'order-list'
+  | 'kpi-card'
+  | 'chart-bar'
+  | 'chart-line'
+  | 'chart-pie'
+  | 'search-results'
+  | 'video-player'
+  | 'music-player'
+  | 'stories-row'
+  | 'reels'
+  | 'tabs'
+  | 'calendar'
+  | 'kanban'
+  | 'timeline'
+  | 'map-card'
+  | 'pricing-card'
+  | 'testimonial'
+  | 'faq-accordion'
+  | 'file-explorer'
+  | 'code-block';
 
 export type VeilSpinnerType =
   | 'ring'
@@ -79,7 +123,25 @@ export type VeilSpinnerType =
   | 'ios-activity'
   | 'glass-orb'
   | 'morph'
-  | 'progress-circle';
+  | 'progress-circle'
+  | 'arc-gradient'
+  | 'pulse-ring'
+  | 'dots-circle'
+  | 'grid-dots'
+  | 'square-flip'
+  | 'cube-fold'
+  | 'hourglass'
+  | 'infinity'
+  | 'heartbeat-line'
+  | 'equalizer'
+  | 'chasing-dots'
+  | 'typing'
+  | 'liquid-fill'
+  | 'atom'
+  | 'clock'
+  | 'radar'
+  | 'ellipsis'
+  | 'flower';
 
 export type VeilRevealTransition =
   | 'fade'
@@ -149,6 +211,7 @@ export interface PresetProps extends Omit<SkeletonProps, 'type'> {
   name: VeilPresetName;
   items?: number;
   columns?: number;
+  shape?: VeilShapeStyle;
 }
 
 export interface AutoMeasureOptions {
@@ -181,6 +244,7 @@ export interface SpinnerProps {
   secondaryColor?: string;
   speed?: number | string;
   label?: string;
+  glass?: boolean;
   className?: string;
   style?: Record<string, string | number>;
 }
@@ -213,15 +277,49 @@ export interface OverlayProps {
   zIndex?: number;
 }
 
+export type ButtonStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export type ButtonLoadingStyle =
+  | 'spinner-left'
+  | 'spinner-right'
+  | 'spinner-replace'
+  | 'dots-after-text'
+  | 'progress-fill'
+  | 'shimmer-surface'
+  | 'pulse-glow'
+  | 'stripes-progress'
+  | 'morph-circle'
+  | 'slide-text'
+  | 'border-trace'
+  | 'liquid-fill'
+  | 'bounce-dots'
+  | 'glass-shine'
+  | 'neon-pulse'
+  | 'skeleton-button';
+
+export type ButtonPressFeedback = 'ripple' | 'press-scale' | 'glow-follow' | 'none';
+
+export type ButtonResultAnimation = 'checkmark' | 'cross' | 'shake' | 'success-burst' | 'none';
+
 export interface LoadingButtonProps {
+  status?: ButtonStatus;
   loading?: boolean;
+  styleType?: ButtonLoadingStyle;
   spinner?: VeilSpinnerType;
   spinnerPlacement?: 'start' | 'end' | 'replace';
   loadingText?: string;
+  successText?: string;
+  errorText?: string;
+  resetAfter?: number;
+  progress?: number;
+  pressFeedback?: ButtonPressFeedback;
+  resultAnimation?: ButtonResultAnimation;
+  haptics?: boolean;
   disabled?: boolean;
   className?: string;
   children?: any;
-  onClick?: (event: any) => void;
+  onStatusChange?: (status: ButtonStatus) => void;
+  onClick?: (event: any) => Promise<any> | void;
 }
 
 export interface LazyImageProps {

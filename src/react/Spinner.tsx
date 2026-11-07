@@ -15,7 +15,7 @@ export function Spinner(props: SpinnerProps) {
     const el = createSpinner(props);
     containerRef.current.innerHTML = '';
     containerRef.current.appendChild(el);
-  }, [props.type, props.size, props.color, props.secondaryColor, props.speed, props.label]);
+  }, [props.type, props.size, props.color, props.secondaryColor, props.speed, props.label, props.glass]);
 
   return (
     <div

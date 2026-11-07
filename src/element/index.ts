@@ -5,6 +5,7 @@
 
 import { injectStyles } from '../core/css';
 import { createSkeletonElement, createSkeletonParagraph } from '../core/primitives';
+import { createPreset } from '../core/presets';
 import { createSpinner } from '../core/spinners';
 import { createProgressElement } from '../core/progress';
 import { overlayController } from '../core/overlay';
@@ -14,6 +15,10 @@ import {
   VeilAnimationName,
   VeilThemeName,
   VeilSpinnerType,
+  VeilPresetName,
+  VeilShapeStyle,
+  ButtonStatus,
+  ButtonLoadingStyle,
 } from '../core/types';
 
 export class VeilSkeletonElement extends HTMLElement {
@@ -58,9 +63,46 @@ export class VeilSkeletonElement extends HTMLElement {
   }
 }
 
+export class VeilPresetElement extends HTMLElement {
+  static get observedAttributes() {
+    return ['name', 'items', 'columns', 'shape', 'animation', 'theme', 'width'];
+  }
+
+  connectedCallback() {
+    injectStyles();
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    this.render();
+  }
+
+  private render() {
+    this.innerHTML = '';
+    const name = (this.getAttribute('name') as VeilPresetName) || 'card';
+    const items = this.getAttribute('items') ? parseInt(this.getAttribute('items')!, 10) : undefined;
+    const columns = this.getAttribute('columns') ? parseInt(this.getAttribute('columns')!, 10) : undefined;
+    const shape = (this.getAttribute('shape') as VeilShapeStyle) || 'rounded';
+    const animation = (this.getAttribute('animation') as VeilAnimationName) || 'shimmer';
+    const theme = (this.getAttribute('theme') as VeilThemeName) || 'light';
+    const width = this.getAttribute('width') || undefined;
+
+    const el = createPreset({
+      name,
+      items,
+      columns,
+      shape,
+      animation,
+      theme,
+      width,
+    });
+    this.appendChild(el);
+  }
+}
+
 export class VeilSpinnerElement extends HTMLElement {
   static get observedAttributes() {
-    return ['type', 'size', 'color'];
+    return ['type', 'size', 'color', 'secondary-color', 'speed', 'glass', 'label'];
   }
 
   connectedCallback() {
@@ -77,8 +119,12 @@ export class VeilSpinnerElement extends HTMLElement {
     const type = (this.getAttribute('type') as VeilSpinnerType) || 'ring';
     const size = this.getAttribute('size') || '28px';
     const color = this.getAttribute('color') || undefined;
+    const secondaryColor = this.getAttribute('secondary-color') || undefined;
+    const speed = this.getAttribute('speed') || undefined;
+    const glass = this.hasAttribute('glass');
+    const label = this.getAttribute('label') || undefined;
 
-    const el = createSpinner({ type, size, color });
+    const el = createSpinner({ type, size, color, secondaryColor, speed, glass, label });
     this.appendChild(el);
   }
 }
@@ -144,7 +190,7 @@ export class VeilLoadingButtonElement extends HTMLElement {
   private btnController: ReturnType<typeof wrapLoadingButton> | null = null;
 
   static get observedAttributes() {
-    return ['loading', 'loading-text'];
+    return ['status', 'loading', 'style-type', 'spinner', 'loading-text', 'success-text', 'error-text', 'reset-after'];
   }
 
   connectedCallback() {
@@ -152,14 +198,24 @@ export class VeilLoadingButtonElement extends HTMLElement {
     const btn = this.querySelector('button');
     if (btn) {
       this.btnController = wrapLoadingButton(btn, {
+        status: (this.getAttribute('status') as ButtonStatus) || undefined,
         loading: this.hasAttribute('loading'),
+        styleType: (this.getAttribute('style-type') as ButtonLoadingStyle) || 'spinner-left',
+        spinner: (this.getAttribute('spinner') as VeilSpinnerType) || 'ring',
         loadingText: this.getAttribute('loading-text') || undefined,
+        successText: this.getAttribute('success-text') || undefined,
+        errorText: this.getAttribute('error-text') || undefined,
+        resetAfter: this.getAttribute('reset-after') ? parseInt(this.getAttribute('reset-after')!, 10) : 2000,
       });
     }
   }
 
   attributeChangedCallback(name: string) {
-    if (name === 'loading' && this.btnController) {
+    if (!this.btnController) return;
+    if (name === 'status') {
+      const status = this.getAttribute('status') as ButtonStatus;
+      if (status) this.btnController.setStatus(status, this.getAttribute('loading-text') || undefined);
+    } else if (name === 'loading') {
       const loading = this.hasAttribute('loading') && this.getAttribute('loading') !== 'false';
       this.btnController.setLoading(loading, this.getAttribute('loading-text') || undefined);
     }
@@ -181,6 +237,9 @@ export function defineVeilElements(): void {
 
   if (!customElements.get('veil-skeleton')) {
     customElements.define('veil-skeleton', VeilSkeletonElement);
+  }
+  if (!customElements.get('veil-preset')) {
+    customElements.define('veil-preset', VeilPresetElement);
   }
   if (!customElements.get('veil-spinner')) {
     customElements.define('veil-spinner', VeilSpinnerElement);

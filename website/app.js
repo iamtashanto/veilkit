@@ -4,6 +4,7 @@ const state = {
   preset: 'product-card',
   animation: 'shimmer',
   theme: 'glass',
+  shape: 'rounded',
   direction: 'ltr',
   speed: 1500,
   radius: 10,
@@ -11,27 +12,51 @@ const state = {
   siteTheme: 'dark',
 };
 
-// Available options
+// 40 Presets
 const PRESETS = [
-  'product-card',
   'card',
+  'product-card',
   'product-grid',
-  'feed-post',
-  'article',
-  'profile',
-  'profile-header',
-  'dashboard',
-  'form',
   'list',
   'list-item',
   'table',
+  'profile',
+  'profile-header',
+  'feed-post',
+  'article',
+  'comment-thread',
   'chat',
+  'dashboard',
+  'form',
   'media-card',
   'navbar',
   'sidebar',
   'settings-page',
+  'product-detail',
+  'news-feed',
+  'inbox-list',
+  'notification-list',
+  'order-list',
+  'kpi-card',
+  'chart-bar',
+  'chart-line',
+  'chart-pie',
+  'search-results',
+  'video-player',
+  'music-player',
+  'stories-row',
+  'reels',
+  'tabs',
+  'calendar',
+  'kanban',
+  'timeline',
+  'map-card',
+  'pricing-card',
+  'testimonial',
+  'faq-accordion',
 ];
 
+// 30 GPU Animations
 const ANIMATIONS = [
   'shimmer',
   'wave',
@@ -45,8 +70,81 @@ const ANIMATIONS = [
   'sparkle',
   'neon-glow',
   'stagger',
+  'ripple',
+  'ping-pong',
+  'wipe',
+  'cascade',
+  'spotlight',
+  'rainbow',
+  'heartbeat',
+  'liquid',
+  'stripes',
+  'halftone',
+  'border-glow',
+  'typewriter',
+  'glitch',
+  'pixelate',
+  'tilt',
+  'diagonal-sweep',
+  'bounce-in',
+  'fade-slide',
 ];
 
+// 30 Spinners
+const SPINNERS = [
+  'ring',
+  'dual-ring',
+  'dots',
+  'bars',
+  'pulse',
+  'orbit',
+  'wave',
+  'bounce',
+  'ios-activity',
+  'glass-orb',
+  'morph',
+  'progress-circle',
+  'arc-gradient',
+  'pulse-ring',
+  'dots-circle',
+  'grid-dots',
+  'square-flip',
+  'cube-fold',
+  'hourglass',
+  'infinity',
+  'heartbeat-line',
+  'equalizer',
+  'chasing-dots',
+  'typing',
+  'liquid-fill',
+  'atom',
+  'clock',
+  'radar',
+  'ellipsis',
+  'flower',
+];
+
+// 16 Button Loading Styles
+const BUTTON_STYLES = [
+  'spinner-left',
+  'spinner-right',
+  'spinner-replace',
+  'dots-after-text',
+  'progress-fill',
+  'shimmer-surface',
+  'pulse-glow',
+  'stripes-progress',
+  'morph-circle',
+  'slide-text',
+  'border-trace',
+  'liquid-fill',
+  'bounce-dots',
+  'glass-shine',
+  'neon-pulse',
+  'skeleton-button',
+];
+
+// 11 Themes
 const THEMES = [
   'glass',
   'ios',
@@ -61,26 +159,14 @@ const THEMES = [
   'ocean',
 ];
 
-const SPINNERS = [
-  'ring',
-  'dual-ring',
-  'dots',
-  'bars',
-  'pulse',
-  'orbit',
-  'wave',
-  'bounce',
-  'ios-activity',
-  'glass-orb',
-  'morph',
-  'progress-circle',
-];
-
 function init() {
   populateControls();
   renderPreview();
   renderCode();
+  renderPresetsGallery();
+  renderAnimationsGallery();
   renderSpinnersGallery();
+  renderButtonsGallery();
   renderThemesGallery();
   setupEventListeners();
 }
@@ -116,251 +202,336 @@ function populateControls() {
 
 function renderPreview() {
   const viewport = document.getElementById('preview-viewport');
+  if (!viewport || !window.Veilkit) return;
+
   viewport.innerHTML = '';
-
-  if (typeof Veilkit !== 'undefined') {
-    const el = Veilkit.createPreset({
-      name: state.preset,
-      animation: state.animation,
-      theme: state.theme,
-      direction: state.direction,
-      speed: state.speed,
-      radius: state.radius,
-    });
-    viewport.appendChild(el);
-  }
-}
-
-function generateCode() {
-  const { preset, animation, theme, speed, radius, framework } = state;
-
-  switch (framework) {
-    case 'react':
-      return `import { SkeletonPreset } from 'veilkit/react';
-
-export default function MyComponent() {
-  return (
-    <SkeletonPreset
-      name="${preset}"
-      animation="${animation}"
-      theme="${theme}"
-      speed="${speed}ms"
-      radius="${radius}px"
-    />
-  );
-}`;
-
-    case 'vue':
-      return `<script setup>
-import { VSkeletonPreset } from 'veilkit/vue';
-</script>
-
-<template>
-  <VSkeletonPreset
-    name="${preset}"
-    animation="${animation}"
-    theme="${theme}"
-    speed="${speed}ms"
-    radius="${radius}px"
-  />
-</template>`;
-
-    case 'svelte':
-      return `<script>
-  import { createPreset } from 'veilkit';
-  import { onMount } from 'svelte';
-
-  let container;
-  onMount(() => {
-    container.appendChild(createPreset({
-      name: '${preset}',
-      animation: '${animation}',
-      theme: '${theme}'
-    }));
+  const el = window.Veilkit.createPreset({
+    name: state.preset,
+    animation: state.animation,
+    theme: state.theme,
+    shape: state.shape,
+    speed: `${state.speed}ms`,
   });
-</script>
 
-<div bind:this={container} />`;
-
-    case 'angular':
-      return `import { Component } from '@angular/core';
-import { VeilSkeletonComponent } from 'veilkit/angular';
-
-@Component({
-  standalone: true,
-  imports: [VeilSkeletonComponent],
-  template: \`
-    <veil-skeleton
-      [name]="'${preset}'"
-      animation="${animation}"
-      theme="${theme}"
-    ></veil-skeleton>
-  \`
-})
-export class MyComponent {}`;
-
-    case 'element':
-      return `<!-- Web Component: Zero wrappers, works in Solid, Qwik, HTMX, HTML -->
-<veil-skeleton
-  preset="${preset}"
-  animation="${animation}"
-  theme="${theme}"
-  speed="${speed}ms"
-  radius="${radius}px"
-></veil-skeleton>
-
-<script type="module" src="https://unpkg.com/veilkit/dist/element/index.js"></script>`;
-
-    case 'native':
-      return `import { Skeleton, SkeletonGroup } from 'veilkit/native';
-
-export default function CardSkeleton() {
-  return (
-    <SkeletonGroup>
-      <Skeleton height={180} radius={${radius}} animation="${animation}" theme="${theme}" />
-      <Skeleton height={20} width="80%" radius={4} style={{ marginTop: 12 }} />
-      <Skeleton height={14} width="50%" radius={4} style={{ marginTop: 8 }} />
-    </SkeletonGroup>
-  );
-}`;
-
-    case 'vanilla':
-    default:
-      return `<!-- HTML + Vanilla JS -->
-<div id="loader"></div>
-
-<script src="https://unpkg.com/veilkit/dist/veilkit.min.js"></script>
-<script>
-  const el = Veilkit.createPreset({
-    name: '${preset}',
-    animation: '${animation}',
-    theme: '${theme}',
-    speed: '${speed}ms',
-    radius: '${radius}px'
-  });
-  document.getElementById('loader').appendChild(el);
-</script>`;
-  }
+  viewport.appendChild(el);
 }
 
 function renderCode() {
-  const codeBlock = document.getElementById('generated-code');
-  if (codeBlock) {
-    codeBlock.textContent = generateCode();
+  const codeEl = document.getElementById('generated-code');
+  if (!codeEl) return;
+
+  const pascalName = state.preset
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('');
+
+  let code = '';
+  switch (state.framework) {
+    case 'react':
+      code = `import 'veilkit/styles.css';\nimport { SkeletonPreset } from 'veilkit/react';\n\nexport default function LoadingView() {\n  return (\n    <SkeletonPreset\n      name="${state.preset}"\n      animation="${state.animation}"\n      theme="${state.theme}"\n      shape="${state.shape}"\n    />\n  );\n}`;
+      break;
+
+    case 'vue':
+      code = `<script setup>\nimport 'veilkit/styles.css';\nimport { VSkeletonPreset } from 'veilkit/vue';\n</script>\n\n<template>\n  <VSkeletonPreset\n    name="${state.preset}"\n    animation="${state.animation}"\n    theme="${state.theme}"\n    shape="${state.shape}"\n  />\n</template>`;
+      break;
+
+    case 'svelte':
+      code = `<script>\n  import 'veilkit/styles.css';\n  import { presetAction } from 'veilkit/svelte';\n</script>\n\n<div use:presetAction={{ name: '${state.preset}', animation: '${state.animation}', theme: '${state.theme}', shape: '${state.shape}' }} />`;
+      break;
+
+    case 'angular':
+      code = `import { Component } from '@angular/core';\nimport { VeilPresetComponent } from 'veilkit/angular';\n\n@Component({\n  standalone: true,\n  imports: [VeilPresetComponent],\n  template: \`\n    <veil-preset\n      name="${state.preset}"\n      animation="${state.animation}"\n      theme="${state.theme}"\n      shape="${state.shape}"\n    />\n  \`,\n})\nexport class LoadingComponent {}`;
+      break;
+
+    case 'element':
+      code = `<!-- Universal Web Component (Solid, Qwik, HTMX, HTML) -->\n<script type="module" src="https://unpkg.com/veilkit/dist/element/index.js"></script>\n<link rel="stylesheet" href="https://unpkg.com/veilkit/dist/styles.css" />\n\n<veil-preset\n  name="${state.preset}"\n  animation="${state.animation}"\n  theme="${state.theme}"\n  shape="${state.shape}">\n</veil-preset>`;
+      break;
+
+    case 'native':
+      code = `import React from 'react';\nimport { Skeleton } from 'veilkit/native';\n\nexport function LoadingScreen() {\n  return (\n    <Skeleton\n      animation="${state.animation}"\n      theme="${state.theme}"\n      radius={${state.radius}}\n    />\n  );\n}`;
+      break;
+
+    case 'vanilla':
+      code = `<!-- Plain HTML & CDN -->\n<link rel="stylesheet" href="https://unpkg.com/veilkit/dist/styles.css" />\n<script src="https://unpkg.com/veilkit/dist/veilkit.min.js"></script>\n\n<div id="loading-target"></div>\n\n<script>\n  const preset = Veilkit.createPreset({\n    name: '${state.preset}',\n    animation: '${state.animation}',\n    theme: '${state.theme}',\n    shape: '${state.shape}',\n  });\n  document.getElementById('loading-target').appendChild(preset);\n</script>`;
+      break;
   }
+
+  codeEl.textContent = code;
+}
+
+function renderPresetsGallery() {
+  const gallery = document.getElementById('presets-gallery');
+  if (!gallery || !window.Veilkit) return;
+  gallery.innerHTML = '';
+
+  PRESETS.forEach((preset) => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+
+    const title = document.createElement('div');
+    title.className = 'gallery-card-title';
+    title.textContent = preset;
+
+    const preview = document.createElement('div');
+    preview.style.width = '100%';
+    preview.style.minHeight = '100px';
+    preview.style.display = 'flex';
+    preview.style.alignItems = 'center';
+    preview.style.justifyContent = 'center';
+
+    const pEl = window.Veilkit.createPreset({
+      name: preset,
+      animation: 'shimmer',
+      theme: 'glass',
+      width: '100%',
+    });
+    preview.appendChild(pEl);
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.style.marginTop = '12px';
+    copyBtn.textContent = 'Copy Code';
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(`<SkeletonPreset name="${preset}" />`);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => (copyBtn.textContent = 'Copy Code'), 1500);
+    };
+
+    card.append(title, preview, copyBtn);
+    gallery.appendChild(card);
+  });
+}
+
+function renderAnimationsGallery() {
+  const gallery = document.getElementById('animations-gallery');
+  if (!gallery || !window.Veilkit) return;
+  gallery.innerHTML = '';
+
+  ANIMATIONS.forEach((anim) => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+
+    const title = document.createElement('div');
+    title.className = 'gallery-card-title';
+    title.textContent = anim;
+
+    const preview = document.createElement('div');
+    preview.style.width = '100%';
+    preview.style.padding = '12px 0';
+
+    const skel = window.Veilkit.createSkeletonElement({
+      animation: anim,
+      width: '100%',
+      height: '32px',
+      radius: '8px',
+    });
+    preview.appendChild(skel);
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.style.marginTop = '10px';
+    copyBtn.textContent = 'Copy Code';
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(`<Skeleton animation="${anim}" />`);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => (copyBtn.textContent = 'Copy Code'), 1500);
+    };
+
+    card.append(title, preview, copyBtn);
+    gallery.appendChild(card);
+  });
 }
 
 function renderSpinnersGallery() {
   const gallery = document.getElementById('spinners-gallery');
-  if (!gallery || typeof Veilkit === 'undefined') return;
+  if (!gallery || !window.Veilkit) return;
   gallery.innerHTML = '';
 
-  SPINNERS.forEach((type) => {
+  SPINNERS.forEach((spinner) => {
     const card = document.createElement('div');
     card.className = 'gallery-card';
 
-    const spinner = Veilkit.createSpinner({ type, size: 38, color: '#38bdf8' });
     const title = document.createElement('div');
     title.className = 'gallery-card-title';
-    title.textContent = type;
+    title.textContent = spinner;
 
-    card.append(spinner, title);
+    const preview = document.createElement('div');
+    preview.style.height = '60px';
+    preview.style.display = 'flex';
+    preview.style.alignItems = 'center';
+    preview.style.justifyContent = 'center';
+
+    const spEl = window.Veilkit.createSpinner({
+      type: spinner,
+      size: 32,
+      color: 'var(--accent, #38bdf8)',
+    });
+    preview.appendChild(spEl);
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.style.marginTop = '8px';
+    copyBtn.textContent = 'Copy Code';
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(`<Spinner type="${spinner}" size={32} />`);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => (copyBtn.textContent = 'Copy Code'), 1500);
+    };
+
+    card.append(title, preview, copyBtn);
+    gallery.appendChild(card);
+  });
+}
+
+function renderButtonsGallery() {
+  const gallery = document.getElementById('buttons-gallery');
+  if (!gallery || !window.Veilkit) return;
+  gallery.innerHTML = '';
+
+  BUTTON_STYLES.forEach((styleType, idx) => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+
+    const title = document.createElement('div');
+    title.className = 'gallery-card-title';
+    title.textContent = styleType;
+
+    const btn = document.createElement('button');
+    btn.className = 'btn-primary';
+    btn.textContent = 'Save Changes';
+    btn.style.width = '170px';
+    btn.style.margin = '14px 0';
+
+    const controller = window.Veilkit.wrapLoadingButton(btn, {
+      styleType,
+      resetAfter: 2000,
+      loadingText: 'Saving…',
+      successText: 'Saved!',
+      errorText: 'Failed',
+    });
+
+    // Simulate action click: idle -> loading -> success (or error every 3rd) -> idle
+    btn.onclick = () => {
+      if (controller.getStatus() !== 'idle') return;
+      controller.setStatus('loading');
+      setTimeout(() => {
+        if (idx % 3 === 2) {
+          controller.setStatus('error');
+        } else {
+          controller.setStatus('success');
+        }
+      }, 1500);
+    };
+
+    const hint = document.createElement('div');
+    hint.className = 'gallery-card-desc';
+    hint.textContent = 'Click button to simulate lifecycle';
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.style.marginTop = '6px';
+    copyBtn.textContent = 'Copy Code';
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(`<LoadingButton styleType="${styleType}" onClick={handleSave}>Save Changes</LoadingButton>`);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => (copyBtn.textContent = 'Copy Code'), 1500);
+    };
+
+    card.append(title, btn, hint, copyBtn);
     gallery.appendChild(card);
   });
 }
 
 function renderThemesGallery() {
   const gallery = document.getElementById('themes-gallery');
-  if (!gallery || typeof Veilkit === 'undefined') return;
+  if (!gallery || !window.Veilkit) return;
   gallery.innerHTML = '';
 
   THEMES.forEach((theme) => {
     const card = document.createElement('div');
     card.className = 'gallery-card';
 
-    const preview = Veilkit.createSkeletonElement({
-      type: 'rect',
-      width: '100%',
-      height: 60,
-      radius: 8,
-      theme,
-      animation: 'shimmer',
-    });
-
     const title = document.createElement('div');
     title.className = 'gallery-card-title';
-    title.textContent = theme;
+    title.textContent = theme.toUpperCase();
 
-    card.append(preview, title);
+    const preview = document.createElement('div');
+    preview.style.width = '100%';
+    preview.style.padding = '8px 0';
+
+    const skel = window.Veilkit.createSkeletonElement({
+      theme: theme,
+      animation: 'shimmer',
+      width: '100%',
+      height: '36px',
+      radius: '8px',
+    });
+    preview.appendChild(skel);
+
+    card.append(title, preview);
     gallery.appendChild(card);
   });
 }
 
 function setupEventListeners() {
-  document.getElementById('select-preset').addEventListener('change', (e) => {
+  document.getElementById('select-preset')?.addEventListener('change', (e) => {
     state.preset = e.target.value;
     renderPreview();
     renderCode();
   });
 
-  document.getElementById('select-anim').addEventListener('change', (e) => {
+  document.getElementById('select-anim')?.addEventListener('change', (e) => {
     state.animation = e.target.value;
     renderPreview();
     renderCode();
   });
 
-  document.getElementById('select-theme').addEventListener('change', (e) => {
+  document.getElementById('select-theme')?.addEventListener('change', (e) => {
     state.theme = e.target.value;
     renderPreview();
     renderCode();
   });
 
-  document.getElementById('input-speed').addEventListener('input', (e) => {
+  document.getElementById('select-shape')?.addEventListener('change', (e) => {
+    state.shape = e.target.value;
+    renderPreview();
+    renderCode();
+  });
+
+  document.getElementById('input-speed')?.addEventListener('input', (e) => {
     state.speed = parseInt(e.target.value, 10);
     document.getElementById('val-speed').textContent = `${state.speed}ms`;
     renderPreview();
-    renderCode();
   });
 
-  document.getElementById('input-radius').addEventListener('input', (e) => {
+  document.getElementById('input-radius')?.addEventListener('input', (e) => {
     state.radius = parseInt(e.target.value, 10);
     document.getElementById('val-radius').textContent = `${state.radius}px`;
     renderPreview();
-    renderCode();
   });
 
-  // Framework tabs
   document.querySelectorAll('.framework-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.framework-tab').forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
-      state.framework = tab.dataset.fw;
+      state.framework = tab.getAttribute('data-fw');
       renderCode();
     });
   });
 
-  // Copy button
-  const copyBtn = document.getElementById('copy-code-btn');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(generateCode()).then(() => {
-        copyBtn.textContent = '✓ Copied!';
-        setTimeout(() => {
-          copyBtn.textContent = 'Copy Code';
-        }, 2000);
-      });
-    });
-  }
+  document.getElementById('copy-code-btn')?.addEventListener('click', () => {
+    const code = document.getElementById('generated-code').textContent;
+    navigator.clipboard.writeText(code);
+    const btn = document.getElementById('copy-code-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => (btn.textContent = 'Copy Code'), 1500);
+  });
 
-  // Site theme toggle
-  const themeToggle = document.getElementById('theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      state.siteTheme = state.siteTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-site-theme', state.siteTheme);
-      themeToggle.textContent = state.siteTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-    });
-  }
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    state.siteTheme = state.siteTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-site-theme', state.siteTheme);
+    document.getElementById('theme-toggle').textContent = state.siteTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  });
 }
 
 window.addEventListener('DOMContentLoaded', init);
