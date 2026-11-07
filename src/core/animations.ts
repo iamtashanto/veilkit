@@ -1,5 +1,6 @@
 /**
  * Veilkit - Animation Engine
+ * 12 GPU-Accelerated Animation Definitions (transform & opacity only)
  * 30 GPU-Accelerated Animation Definitions (transform & opacity only)
  */
 
@@ -48,6 +49,7 @@ export const ANIMATION_NAMES: VeilAnimationName[] = [
 ];
 
 /**
+ * Generates the CSS keyframes and utility rules for all 12 animations.
  * Generates the CSS keyframes and utility rules for all 30 animations.
  * Strictly uses transform and opacity for 60fps GPU execution.
  */

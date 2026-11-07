@@ -102,6 +102,7 @@ export class VeilPresetElement extends HTMLElement {
 
 export class VeilSpinnerElement extends HTMLElement {
   static get observedAttributes() {
+    return ['type', 'size', 'color'];
     return ['type', 'size', 'color', 'secondary-color', 'speed', 'glass', 'label'];
   }
 
@@ -124,6 +125,7 @@ export class VeilSpinnerElement extends HTMLElement {
     const glass = this.hasAttribute('glass');
     const label = this.getAttribute('label') || undefined;
 
+    const el = createSpinner({ type, size, color });
     const el = createSpinner({ type, size, color, secondaryColor, speed, glass, label });
     this.appendChild(el);
   }
@@ -190,6 +192,7 @@ export class VeilLoadingButtonElement extends HTMLElement {
   private btnController: ReturnType<typeof wrapLoadingButton> | null = null;
 
   static get observedAttributes() {
+    return ['loading', 'loading-text'];
     return ['status', 'loading', 'style-type', 'spinner', 'loading-text', 'success-text', 'error-text', 'reset-after'];
   }
 
@@ -211,6 +214,7 @@ export class VeilLoadingButtonElement extends HTMLElement {
   }
 
   attributeChangedCallback(name: string) {
+    if (name === 'loading' && this.btnController) {
     if (!this.btnController) return;
     if (name === 'status') {
       const status = this.getAttribute('status') as ButtonStatus;

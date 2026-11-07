@@ -2,6 +2,7 @@
  * Veilkit - Svelte Runes & Element Helpers
  */
 
+import { SkeletonProps, SpinnerProps, ProgressProps, OverlayProps } from '../core/types';
 import { SkeletonProps, SpinnerProps, ProgressProps, OverlayProps, PresetProps, LoadingButtonProps } from '../core/types';
 import { createSkeletonElement, createSkeletonParagraph } from '../core/primitives';
 import { createPreset } from '../core/presets';
