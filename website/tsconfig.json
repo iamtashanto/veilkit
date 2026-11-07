@@ -22,10 +22,6 @@
       "@/*": ["./*"],
       "veilkit": ["./veilkit/index.ts"],
       "veilkit/react": ["./veilkit/react/index.ts"],
-      "veilkit/vue": ["./veilkit/vue/index.ts"],
-      "veilkit/svelte": ["./veilkit/svelte/index.ts"],
-      "veilkit/angular": ["./veilkit/angular/index.ts"],
-      "veilkit/element": ["./veilkit/element/index.ts"],
       "veilkit/themes": ["./veilkit/themes/index.ts"],
       "veilkit/*": ["./veilkit/*"]
     }
@@ -38,5 +34,13 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "veilkit/native", "veilkit/cli"]
+  "exclude": [
+    "node_modules",
+    "veilkit/native",
+    "veilkit/cli",
+    "veilkit/angular",
+    "veilkit/vue",
+    "veilkit/svelte",
+    "veilkit/element"
+  ]
 }

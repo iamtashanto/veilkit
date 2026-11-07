@@ -47,7 +47,7 @@ export function wrapLoadingButton(
   let currentStatus: ButtonStatus = props.status || (props.loading ? 'loading' : 'idle');
   let originalWidth: string = buttonEl.style.width || '';
   let originalHeight: string = buttonEl.style.height || '';
-  let originalHtml: string = buttonEl.innerHTML;
+  const originalHtml: string = buttonEl.innerHTML;
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Immediately store dimensions if rendered
