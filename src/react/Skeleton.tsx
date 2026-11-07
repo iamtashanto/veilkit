@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, ReactNode, CSSProperties } from 'react';
+import { useRef, useEffect, ReactNode } from 'react';
 import { SkeletonProps, AutoMeasureOptions } from '../core/types';
 import { useVeil } from './context';
 import { injectStyles } from '../core/css';
@@ -44,13 +44,13 @@ export function Skeleton({
   const durMs = parseDurationMs(speed || 1500);
   const syncDelay = typeof window !== 'undefined' ? getSyncDelay(durMs) : '0s';
 
-  const baseInlineStyle: CSSProperties = {
+  const baseInlineStyle: Record<string, any> = {
     ...style,
-    ['--veil-sync-delay' as any]: syncDelay,
+    '--veil-sync-delay': syncDelay,
   };
 
   if (speed) {
-    baseInlineStyle['--veil-duration' as any] = `${durMs}ms`;
+    baseInlineStyle['--veil-duration'] = `${durMs}ms`;
   }
   if (width !== undefined) {
     baseInlineStyle.width = typeof width === 'number' ? `${width}px` : width;
@@ -60,7 +60,7 @@ export function Skeleton({
   }
   if (radius !== undefined) {
     const r = typeof radius === 'number' ? `${radius}px` : radius;
-    baseInlineStyle['--veil-radius' as any] = r;
+    baseInlineStyle['--veil-radius'] = r;
     baseInlineStyle.borderRadius = r;
   }
   if (circle) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
 import { VeilGlobalConfig, VeilThemeName, VeilAnimationName, CustomThemeInput } from '../core/types';
 import { injectStyles, setNonce } from '../core/css';
 import { setLocale, setLabels } from '../core/a11y';

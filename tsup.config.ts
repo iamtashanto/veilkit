@@ -10,7 +10,7 @@ export default defineConfig([
       'svelte/index': 'src/svelte/index.ts',
       'angular/index': 'src/angular/index.ts',
       'element/index': 'src/element/index.ts',
-      'native/index': 'src/native/index.ts',
+      'native/index': 'src/native/index.tsx',
       'themes/index': 'src/themes/index.ts',
       'cli/index': 'src/cli/index.ts',
     },
@@ -37,12 +37,17 @@ export default defineConfig([
   // Standalone IIFE / CDN build with global `Veilkit`
   {
     entry: {
-      'veilkit.min': 'src/index.ts',
+      veilkit: 'src/index.ts',
     },
     format: ['iife'],
     globalName: 'Veilkit',
     minify: true,
     sourcemap: false,
     outDir: 'dist',
+    outExtension() {
+      return {
+        js: '.min.js',
+      };
+    },
   },
 ]);

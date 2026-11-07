@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { SpinnerProps } from '../core/types';
 import { createSpinner } from '../core/spinners';
 import { injectStyles } from '../core/css';

@@ -8,7 +8,6 @@ import {
   SkeletonProps,
   SkeletonController,
   SpinnerProps,
-  OverlayProps,
   AutoMeasureOptions,
 } from './types';
 import { injectStyles, setNonce } from './css';
@@ -23,7 +22,7 @@ import { track, wrapFetch } from './track';
 import { setLocale, setLabels } from './a11y';
 import { createTheme, getThemeTokens } from './themes';
 
-class VeilkitController {
+export class VeilkitController {
   private config: VeilGlobalConfig = {};
 
   /**

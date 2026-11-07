@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { ProgressProps } from '../core/types';
 import { createProgressElement, progressController } from '../core/progress';
 import { injectStyles } from '../core/css';

@@ -6,7 +6,7 @@
 
 type Listener = (isLoading: boolean, count: number) => void;
 
-class LoadingManager {
+export class LoadingManager {
   private activeIds = new Set<string>();
   private counter: number = 0;
   private listeners = new Set<Listener>();
