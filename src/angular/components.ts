@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import type { VeilPrimitiveType, VeilAnimationName, VeilThemeName, VeilSpinnerType } from '../core/types';
 import type {
   VeilPrimitiveType,
   VeilAnimationName,
@@ -114,7 +113,6 @@ export class VeilPresetComponent implements OnInit, OnChanges {
   standalone: true,
   template: ``,
 })
-export class VeilSpinnerComponent implements OnInit {
 export class VeilSpinnerComponent implements OnInit, OnChanges {
   @Input() type: VeilSpinnerType = 'ring';
   @Input() size?: string | number = 28;
@@ -148,7 +146,6 @@ export class VeilSpinnerComponent implements OnInit, OnChanges {
       glass: this.glass,
       label: this.label,
     });
-    this.el.nativeElement.appendChild(spinner);
     native.appendChild(spinner);
   }
 }

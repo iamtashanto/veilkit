@@ -85,7 +85,6 @@ export type VeilPresetName =
   | 'media-card'
   | 'navbar'
   | 'sidebar'
-  | 'settings-page';
   | 'settings-page'
   | 'product-detail'
   | 'news-feed'
@@ -124,7 +123,6 @@ export type VeilSpinnerType =
   | 'ios-activity'
   | 'glass-orb'
   | 'morph'
-  | 'progress-circle';
   | 'progress-circle'
   | 'arc-gradient'
   | 'pulse-ring'
@@ -320,7 +318,6 @@ export interface LoadingButtonProps {
   disabled?: boolean;
   className?: string;
   children?: any;
-  onClick?: (event: any) => void;
   onStatusChange?: (status: ButtonStatus) => void;
   onClick?: (event: any) => Promise<any> | void;
 }

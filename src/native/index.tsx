@@ -208,7 +208,6 @@ export function Overlay({
 }
 
 export function LoadingButton({
-  loading,
   status: controlledStatus,
   loading = false,
   title,
@@ -221,11 +220,9 @@ export function LoadingButton({
   style,
   textStyle,
 }: {
-  loading: boolean;
   status?: 'idle' | 'loading' | 'success' | 'error';
   loading?: boolean;
   title: string;
-  onPress?: () => void;
   loadingText?: string;
   successText?: string;
   errorText?: string;
@@ -300,20 +297,11 @@ export function LoadingButton({
 
   return (
     <TouchableOpacity
-      disabled={loading}
-      onPress={onPress}
-      accessibilityState={{ busy: loading, disabled: loading }}
-      style={[styles.btnBase, style]}
       disabled={isDisabled}
       onPress={handlePress}
       accessibilityState={{ busy: isBusy, disabled: isDisabled }}
       style={[styles.btnBase, bgStyle, style]}
     >
-      {loading ? (
-        <Spinner size="small" color="#ffffff" />
-      ) : (
-        <Text style={[styles.btnText, textStyle]}>{title}</Text>
-      )}
       {content}
     </TouchableOpacity>
   );

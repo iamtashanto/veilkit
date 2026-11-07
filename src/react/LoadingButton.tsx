@@ -8,7 +8,6 @@ export interface ReactLoadingButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>,
     LoadingButtonProps {
   children?: ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<any> | void;
 }
 
@@ -58,7 +57,6 @@ export function LoadingButton({
         onClick,
       });
     } else {
-      controllerRef.current.setLoading(loading, loadingText);
       if (status !== undefined) {
         controllerRef.current.setStatus(status);
       } else {
@@ -72,7 +70,6 @@ export function LoadingButton({
         controllerRef.current = null;
       }
     };
-  }, [loading, spinner, spinnerPlacement, loadingText]);
   }, [
     status,
     loading,
@@ -92,8 +89,6 @@ export function LoadingButton({
     <button
       ref={buttonRef}
       className={`veil-button ${className}`.trim()}
-      disabled={disabled || loading}
-      onClick={loading ? undefined : onClick}
       disabled={disabled || loading || status === 'loading'}
       {...rest}
     >

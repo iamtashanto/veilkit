@@ -1,12 +1,9 @@
 /**
  * Veilkit - Loading Button Controller
- * Inline spinner, preserves exact button dimensions to prevent layout shifts,
- * disables clicks, and applies aria-disabled state.
  * 16 Loading Styles, State Machine (idle -> loading -> success | error -> idle),
  * Result Animations (checkmark, cross, shake, success-burst), and Press Feedback.
  */
 
-import { LoadingButtonProps } from './types';
 import {
   ButtonLoadingStyle,
   ButtonPressFeedback,
@@ -50,29 +47,13 @@ export function wrapLoadingButton(
   let currentStatus: ButtonStatus = props.status || (props.loading ? 'loading' : 'idle');
   let originalWidth: string = '';
   let originalHeight: string = '';
-  let originalContent: Node[] = [];
-  let spinnerWrapper: HTMLElement | null = null;
-  let textNode: Text | null = null;
   let originalHtml: string = buttonEl.innerHTML;
   let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
-  function setLoading(loading: boolean, loadingText?: string) {
-    if (loading) {
-      if (!buttonEl.classList.contains('veil-btn-loading')) {
-        const rect = buttonEl.getBoundingClientRect();
-        originalWidth = buttonEl.style.width;
-        originalHeight = buttonEl.style.height;
   // Press Feedback Listeners
   const pressFeedback: ButtonPressFeedback = props.pressFeedback || 'press-scale';
   setupPressFeedback(buttonEl, pressFeedback);
 
-        // Lock button dimension to prevent layout shifts
-        if (rect.width > 0) {
-          buttonEl.style.width = `${rect.width}px`;
-        }
-        if (rect.height > 0) {
-          buttonEl.style.height = `${rect.height}px`;
-        }
   function clearResetTimer(): void {
     if (resetTimer) {
       clearTimeout(resetTimer);
@@ -80,35 +61,15 @@ export function wrapLoadingButton(
     }
   }
 
-        buttonEl.classList.add('veil-btn-loading');
-        buttonEl.setAttribute('aria-disabled', 'true');
-        buttonEl.setAttribute('aria-busy', 'true');
   function setStatus(status: ButtonStatus, customText?: string): void {
     clearResetTimer();
     const prevStatus = currentStatus;
     currentStatus = status;
 
-        if (props.spinnerPlacement === 'replace') {
-          originalContent = Array.from(buttonEl.childNodes);
-          buttonEl.innerHTML = '';
-          const spinner = createSpinner({ type: props.spinner || 'ring', size: 18, color: 'currentColor' });
-          buttonEl.appendChild(spinner);
-        } else {
-          // Prepend spinner
-          spinnerWrapper = document.createElement('span');
-          spinnerWrapper.className = 'veil-btn-spinner-wrap';
-          const spinner = createSpinner({ type: props.spinner || 'ring', size: 16, color: 'currentColor' });
-          spinnerWrapper.appendChild(spinner);
-          buttonEl.insertBefore(spinnerWrapper, buttonEl.firstChild);
     if (props.onStatusChange && prevStatus !== status) {
       props.onStatusChange(status);
     }
 
-          if (loadingText || props.loadingText) {
-            textNode = document.createTextNode(` ${loadingText || props.loadingText}`);
-            buttonEl.appendChild(textNode);
-          }
-        }
     if (status === 'idle') {
       buttonEl.classList.remove(
         'veil-btn-loading',
@@ -135,40 +96,17 @@ export function wrapLoadingButton(
       if (rect.width > 0) {
         buttonEl.style.width = `${rect.width}px`;
       }
-    } else {
-      if (buttonEl.classList.contains('veil-btn-loading')) {
-        buttonEl.classList.remove('veil-btn-loading');
-        buttonEl.removeAttribute('aria-disabled');
-        buttonEl.removeAttribute('aria-busy');
       if (rect.height > 0) {
         buttonEl.style.height = `${rect.height}px`;
       }
     }
 
-        buttonEl.style.width = originalWidth;
-        buttonEl.style.height = originalHeight;
     if (status === 'loading') {
       buttonEl.classList.add('veil-btn-loading');
       buttonEl.classList.remove('veil-btn-success', 'veil-btn-error');
       buttonEl.setAttribute('aria-disabled', 'true');
       buttonEl.setAttribute('aria-busy', 'true');
 
-        if (props.spinnerPlacement === 'replace') {
-          buttonEl.innerHTML = '';
-          for (const node of originalContent) {
-            buttonEl.appendChild(node);
-          }
-          originalContent = [];
-        } else {
-          if (spinnerWrapper) {
-            spinnerWrapper.remove();
-            spinnerWrapper = null;
-          }
-          if (textNode) {
-            textNode.remove();
-            textNode = null;
-          }
-        }
       const styleType: ButtonLoadingStyle =
         props.styleType ||
         (props.spinnerPlacement === 'replace'
@@ -203,8 +141,6 @@ export function wrapLoadingButton(
     }
   }
 
-  if (props.loading) {
-    setLoading(true, props.loadingText);
   // Promise-driven Click Handler
   const clickHandler = async (e: MouseEvent) => {
     if (currentStatus !== 'idle') {
@@ -236,8 +172,6 @@ export function wrapLoadingButton(
   }
 
   return {
-    setLoading,
-    destroy: () => setLoading(false),
     setStatus,
     setLoading: (loading: boolean, text?: string) => setStatus(loading ? 'loading' : 'idle', text),
     getStatus: () => currentStatus,

@@ -1,10 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { wrapLoadingButton } from '../../src/core/button';
 import { describe, it, expect, vi } from 'vitest';
 import { wrapLoadingButton, BUTTON_LOADING_STYLES } from '../../src/core/button';
 
 describe('Core - Loading Button', () => {
-  it('should toggle loading state and inject spinner without shift', () => {
   it('should have all 16 loading styles registered', () => {
     expect(BUTTON_LOADING_STYLES.length).toBe(16);
   });

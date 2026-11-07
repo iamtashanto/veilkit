@@ -295,9 +295,6 @@ export const VLoadingButton = defineComponent({
     });
 
     watch(
-      () => props.loading,
-      (loading) => {
-        if (controller) controller.setLoading(loading, props.loadingText);
       () => [props.status, props.loading],
       () => {
         if (!controller) return;

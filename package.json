@@ -1,6 +1,5 @@
 {
   "name": "veilkit",
-  "version": "0.1.0",
   "version": "0.2.0",
   "description": "Every loading state, beautifully. One package, every framework.",
   "author": "Md Tanvir Ahamed Shanto (mdtanvirahamedshanto)",
@@ -175,11 +174,6 @@
     "svelte": { "optional": true },
     "vue": { "optional": true }
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
   "engines": {
     "node": ">=18.0.0"
   },
@@ -187,31 +181,26 @@
     {
       "name": "core (esm)",
       "path": "dist/index.js",
-      "limit": "14 kB"
       "limit": "20 kB"
     },
     {
       "name": "react adapter",
       "path": "dist/react/index.js",
-      "limit": "15 kB"
       "limit": "22 kB"
     },
     {
       "name": "vue adapter",
       "path": "dist/vue/index.js",
-      "limit": "15 kB"
       "limit": "22 kB"
     },
     {
       "name": "svelte adapter",
       "path": "dist/svelte/index.js",
-      "limit": "10 kB"
       "limit": "18 kB"
     },
     {
       "name": "element adapter",
       "path": "dist/element/index.js",
-      "limit": "10 kB"
       "limit": "18 kB"
     },
     {
