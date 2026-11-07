@@ -1,0 +1,200 @@
+{
+  "name": "veilkit",
+  "version": "0.1.0",
+  "description": "Every loading state, beautifully. One package, every framework.",
+  "author": "Antigravity Team",
+  "license": "MIT",
+  "homepage": "https://veilkit.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veilkit/veilkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/veilkit/veilkit/issues"
+  },
+  "keywords": [
+    "skeleton",
+    "loading",
+    "spinner",
+    "progress",
+    "progress-bar",
+    "overlay",
+    "placeholder",
+    "shimmer",
+    "ui",
+    "react",
+    "vue",
+    "svelte",
+    "angular",
+    "web-components",
+    "react-native",
+    "expo",
+    "nextjs",
+    "nuxt",
+    "sveltekit"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "./dist/styles.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "veilkit": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js",
+      "require": "./dist/vue/index.cjs"
+    },
+    "./svelte": {
+      "types": "./dist/svelte/index.d.ts",
+      "import": "./dist/svelte/index.js",
+      "require": "./dist/svelte/index.cjs"
+    },
+    "./angular": {
+      "types": "./dist/angular/index.d.ts",
+      "import": "./dist/angular/index.js",
+      "require": "./dist/angular/index.cjs"
+    },
+    "./element": {
+      "types": "./dist/element/index.d.ts",
+      "import": "./dist/element/index.js",
+      "require": "./dist/element/index.cjs"
+    },
+    "./native": {
+      "types": "./dist/native/index.d.ts",
+      "import": "./dist/native/index.js",
+      "require": "./dist/native/index.cjs"
+    },
+    "./themes": {
+      "types": "./dist/themes/index.d.ts",
+      "import": "./dist/themes/index.js",
+      "require": "./dist/themes/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:styles": "node scripts/build-css.js",
+    "build:all": "pnpm build && pnpm build:styles",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests --ext .ts,.tsx,.js",
+    "lint:fix": "eslint src tests --ext .ts,.tsx,.js --fix",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "size": "size-limit",
+    "publint": "publint",
+    "attw": "attw --pack .",
+    "prepublishOnly": "pnpm build:all && pnpm typecheck && pnpm test && pnpm publint"
+  },
+  "peerDependencies": {
+    "@angular/common": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "@angular/core": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "@angular/router": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-native": "*",
+    "rxjs": "^7.0.0",
+    "svelte": "^4.0.0 || ^5.0.0",
+    "vue": "^3.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/common": { "optional": true },
+    "@angular/core": { "optional": true },
+    "@angular/router": { "optional": true },
+    "react": { "optional": true },
+    "react-dom": { "optional": true },
+    "react-native": { "optional": true },
+    "rxjs": { "optional": true },
+    "svelte": { "optional": true },
+    "vue": { "optional": true }
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "size-limit": [
+    {
+      "name": "core (esm)",
+      "path": "dist/index.js",
+      "limit": "6 kB"
+    },
+    {
+      "name": "react adapter",
+      "path": "dist/react/index.js",
+      "limit": "8.5 kB"
+    },
+    {
+      "name": "vue adapter",
+      "path": "dist/vue/index.js",
+      "limit": "8.5 kB"
+    },
+    {
+      "name": "svelte adapter",
+      "path": "dist/svelte/index.js",
+      "limit": "8.5 kB"
+    },
+    {
+      "name": "element adapter",
+      "path": "dist/element/index.js",
+      "limit": "8.5 kB"
+    },
+    {
+      "name": "themes bundle",
+      "path": "dist/themes/index.js",
+      "limit": "3 kB"
+    }
+  ],
+  "devDependencies": {
+    "@angular/common": "^17.3.0",
+    "@angular/core": "^17.3.0",
+    "@angular/router": "^17.3.0",
+    "@arethetypeswrong/cli": "^0.15.3",
+    "@size-limit/preset-small-lib": "^11.1.4",
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "eslint": "^8.57.0",
+    "jsdom": "^24.1.0",
+    "prettier": "^3.3.2",
+    "publint": "^0.2.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rxjs": "^7.8.1",
+    "size-limit": "^11.1.4",
+    "svelte": "^4.2.18",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.0",
+    "vue": "^3.4.31",
+    "zone.js": "^0.14.7"
+  }
+}
